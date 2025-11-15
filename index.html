@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta Information -->
+    <meta charset="UTF-8">
+    <meta name="description" id="metaDescription" content="This page is getting ready for launch! Check back soon. Launchpage.xyz is proudly powered by The Codeero Group for newly registered websites, before content is available.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Page Title (will be set dynamically) -->
+    <title>Launching Soon | This page will be here shortly</title>
+
+    <!-- Dynamic Title/Meta Script (runs immediately before render) -->
+    <script>
+        (function() {
+            // Get current domain
+            var hostname = window.location.hostname;
+            var domain = hostname.replace(/^www\./i, '');
+
+            // Only update if not on launchpage.xyz itself
+            if (domain !== 'launchpage.xyz') {
+                // Update title
+                document.title = domain + ' is Launching Soon';
+
+                // Update meta description
+                var metaDesc = document.getElementById('metaDescription');
+                if (metaDesc) {
+                    metaDesc.setAttribute('content', domain + ' is getting ready for launch! Drop your email and we\'ll notify you the moment it\'s ready. Powered by Launchpage.xyz');
+                }
+            }
+        })();
+    </script>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicons/site.webmanifest">
+    <link rel="shortcut icon" href="/img/favicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-config" content="/img/favicons/browserconfig.xml">
+    <meta name="theme-color" content="#1A2F42">
+
+    <!-- Fonts: Clean, modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Theme preference detection (no flash) -->
+    <script>
+        (function() {
+            // Check for saved theme preference or default to system preference
+            var savedTheme = localStorage.getItem('theme');
+            var theme = savedTheme || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <style>
+        /* CSS Variables for Design System - Dark Theme (default) */
+        :root {
+            --color-bg-start: #1A2F42;
+            --color-bg-end: #2C5F7C;
+            --color-accent: #4A9BAE;
+            --color-text: #FFFFFF;
+            --color-text-muted: rgba(255, 255, 255, 0.7);
+            --color-input-bg: #FFFFFF;
+            --color-input-text: #1A2F42;
+            --color-input-placeholder: rgba(26, 47, 66, 0.5);
+            --color-shadow: rgba(0, 0, 0, 0.1);
+
+            --font-main: 'DM Sans', sans-serif;
+
+            --app-height: 100vh;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 3rem;
+
+            --radius-md: 0.75rem;
+            --radius-full: 9999px;
+
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Light Theme */
+        :root[data-theme="light"] {
+            --color-bg-start: #F8FAFC;
+            --color-bg-end: #E2E8F0;
+            --color-accent: #2C5F7C;
+            --color-text: #1A2F42;
+            --color-text-muted: rgba(26, 47, 66, 0.7);
+            --color-input-bg: #FFFFFF;
+            --color-input-text: #1A2F42;
+            --color-input-placeholder: rgba(26, 47, 66, 0.5);
+            --color-shadow: rgba(0, 0, 0, 0.15);
+        }
+
+        /* Noscript fallback: defaults to light mode */
+        html:not([data-theme]) {
+            --color-bg-start: #F8FAFC;
+            --color-bg-end: #E2E8F0;
+            --color-accent: #2C5F7C;
+            --color-text: #1A2F42;
+            --color-text-muted: rgba(26, 47, 66, 0.7);
+            --color-input-bg: #FFFFFF;
+            --color-input-text: #1A2F42;
+            --color-input-placeholder: rgba(26, 47, 66, 0.5);
+            --color-shadow: rgba(0, 0, 0, 0.15);
+        }
+
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            height: var(--app-height);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--color-text);
+            background: linear-gradient(135deg, var(--color-bg-start) 0%, var(--color-bg-end) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-md);
+            min-height: 100vh;
+            min-height: var(--app-height);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Main Container */
+        .container {
+            width: 100%;
+            max-width: 540px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-lg);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Rocket Image */
+        .rocket-container {
+            width: 100%;
+            max-width: 240px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .rocket-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Typography */
+        .title {
+            font-family: var(--font-main);
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: 700;
+            line-height: 1.2;
+            text-align: center;
+            margin: 0;
+            color: var(--color-text);
+            padding: 0 var(--spacing-sm);
+        }
+
+        .domain-highlight {
+            color: var(--color-accent);
+            display: block;
+            margin-top: 0.25rem;
+        }
+
+        .subtitle {
+            font-family: var(--font-main);
+            font-size: clamp(0.95rem, 2vw, 1.0625rem);
+            font-weight: 400;
+            line-height: 1.6;
+            text-align: center;
+            color: var(--color-text-muted);
+            max-width: 460px;
+        }
+
+        /* Email Form */
+        .email-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .form-row {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .form-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .form-group.half {
+            flex: 1;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            background: var(--color-input-bg);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+        }
+
+        .input-wrapper:focus-within {
+            box-shadow: 0 0 0 3px rgba(74, 155, 174, 0.3);
+        }
+
+        .form-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 0.875rem 1rem;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--color-input-text);
+            outline: none;
+            width: 100%;
+            border-radius: var(--radius-md);
+        }
+
+        .form-input::placeholder {
+            color: var(--color-input-placeholder);
+        }
+
+        .submit-btn {
+            background: var(--color-accent);
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 0.875rem 2rem;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            font-weight: 600;
+            color: #FFFFFF;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow);
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.15);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Honeypot (invisible bot protection) */
+        .honeypot {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 0;
+            width: 0;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: var(--spacing-md);
+            text-align: center;
+            font-size: 0.8125rem;
+            line-height: 1.6;
+            color: var(--color-text-muted);
+        }
+
+        .footer a {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .footer a:hover {
+            color: var(--color-white);
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 480px) {
+            body {
+                padding: var(--spacing-sm);
+            }
+
+            .rocket-container {
+                max-width: 200px;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+
+            .form-input {
+                font-size: 16px; /* Prevents zoom on iOS */
+                padding: 0.75rem 1rem;
+            }
+
+            .submit-btn {
+                padding: 0.75rem 1.5rem;
+            }
+
+            .footer {
+                font-size: 0.75rem;
+                padding: var(--spacing-sm);
+            }
+        }
+
+        /* Extra small screens (iPhone SE, etc) */
+        @media (max-width: 375px) {
+            .title {
+                font-size: 1.75rem;
+                padding: 0 0.5rem;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+                padding: 0 0.5rem;
+            }
+
+            .rocket-container {
+                max-width: 160px;
+            }
+
+            .footer {
+                font-size: 0.7rem;
+                padding: 0.75rem 0.5rem;
+                line-height: 1.5;
+            }
+
+            .theme-toggle {
+                width: 40px;
+                height: 40px;
+            }
+
+            .theme-icon {
+                width: 18px;
+                height: 18px;
+            }
+        }
+
+        /* Tablet and larger */
+        @media (min-width: 768px) {
+            .footer {
+                text-align: right;
+                padding-right: var(--spacing-lg);
+            }
+        }
+
+        /* Reduced motion preferences - respect accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .rocket-container {
+                animation: none !important;
+            }
+
+            .container {
+                animation: none !important;
+            }
+        }
+
+        /* Focus visible for accessibility */
+        *:focus-visible {
+            outline: 2px solid var(--color-accent);
+            outline-offset: 2px;
+        }
+
+        /* Loading state */
+        .email-form.submitting {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            background: var(--color-input-bg);
+            border: none;
+            border-radius: var(--radius-full);
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            z-index: 100;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.15);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.95);
+        }
+
+        .theme-icon {
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        /* Icon colors - always use input text color for contrast */
+        .theme-icon-moon,
+        .theme-icon-sun {
+            color: var(--color-input-text);
+            stroke: var(--color-input-text);
+        }
+
+        /* Hide/show icons based on theme */
+        [data-theme="light"] .theme-icon-moon {
+            display: none;
+        }
+
+        [data-theme="dark"] .theme-icon-sun {
+            display: none;
+        }
+
+        /* Noscript: hide toggle button */
+        .no-js .theme-toggle {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .theme-toggle {
+                width: 44px;
+                height: 44px;
+                top: var(--spacing-sm);
+                right: var(--spacing-sm);
+            }
+
+            .theme-icon {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+    </style>
+
+    <!-- Analytics: Plausible (Privacy-First) - Pageview props and tagged events -->
+    <script defer data-domain="launchpage.xyz" src="https://analytics.simplebytes.com/js/script.pageview-props.tagged-events.js"></script>
+    <script>
+        window.plausible = window.plausible || function() {
+            (window.plausible.q = window.plausible.q || []).push(arguments)
+        }
+    </script>
+</head>
+
+<body class="js-enabled">
+    <!-- Noscript fallback: apply light mode class -->
+    <noscript>
+        <style>
+            body {
+                /* Force light mode when JavaScript is disabled */
+                background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
+                color: #1A2F42;
+            }
+            .theme-toggle {
+                display: none;
+            }
+        </style>
+    </noscript>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <!-- Sun icon for light mode -->
+        <svg class="theme-icon theme-icon-sun" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+        </svg>
+        <!-- Moon icon for dark mode -->
+        <svg class="theme-icon theme-icon-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg>
+    </button>
+
+    <!-- Main Content Container -->
+    <div class="container">
+        <!-- Rocket Illustration -->
+        <div class="rocket-container">
+            <img src="img/launch.svg" alt="Rocket launching into space" loading="eager">
+        </div>
+
+        <!-- Heading with dynamic domain -->
+        <h1 class="title">
+            Launching Soon
+            <span class="domain-highlight" id="domainName"></span>
+        </h1>
+
+        <!-- Subheading -->
+        <p class="subtitle">This page is getting ready for launch. Drop your email and we'll notify you the moment it's ready.</p>
+
+        <!-- Email Capture Form -->
+        <form class="email-form" id="emailForm" method="POST" action="https://contact.launchpage.xyz">
+            <!-- Honeypot field for bot protection (invisible) -->
+            <div class="honeypot">
+                <label for="winnie_pooh">Your favorite character (leave blank):</label>
+                <input type="text" name="winnie_pooh" id="winnie_pooh" autocomplete="off" tabindex="-1">
+            </div>
+
+            <!-- First Name and Email Row -->
+            <div class="form-row">
+                <div class="form-group half">
+                    <div class="input-wrapper">
+                        <input
+                            type="text"
+                            name="firstName"
+                            id="firstName"
+                            class="form-input"
+                            placeholder="First name"
+                            required
+                            autocomplete="given-name"
+                            aria-label="First name"
+                        >
+                    </div>
+                </div>
+                <div class="form-group half">
+                    <div class="input-wrapper">
+                        <input
+                            type="email"
+                            name="email"
+                            id="email"
+                            class="form-input"
+                            placeholder="Email address"
+                            required
+                            autocomplete="email"
+                            aria-label="Email address"
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hidden field: page/domain where submission came from -->
+            <input type="hidden" name="page" id="page" value="">
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Notify Me</button>
+        </form>
+    </div>
+
+    <!-- Footer Attribution -->
+    <footer class="footer">
+        <p>
+            <a href="/">launchpage.xyz</a> is proudly powered by
+            <a href="https://www.codeero.com?ref=launchpage" target="_blank">TCG</a>
+            &
+            <a href="https://simplebytes.com?ref=launchpage" target="_blank">Simple Bytes</a>
+        </p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Fix for mobile viewport height (accounts for browser chrome)
+        const setAppHeight = () => {
+            const doc = document.documentElement;
+            doc.style.setProperty('--app-height', `${window.innerHeight}px`);
+        };
+
+        // Set on load and resize
+        window.addEventListener('resize', setAppHeight);
+        setAppHeight();
+
+        // Get and prettify the domain name
+        function prettifyDomain(hostname) {
+            // Remove www. prefix
+            let domain = hostname.replace(/^www\./i, '');
+
+            // Don't show launchpage.xyz itself
+            if (domain === 'launchpage.xyz') {
+                return '';
+            }
+
+            return domain;
+        }
+
+        // Set the domain name in the title and hidden form field
+        const currentDomain = window.location.hostname;
+        const prettyDomain = prettifyDomain(currentDomain);
+        const domainElement = document.getElementById('domainName');
+
+        if (domainElement && prettyDomain) {
+            domainElement.textContent = prettyDomain;
+        }
+
+        // Set the page field to current domain for form submission
+        const pageField = document.getElementById('page');
+        if (pageField) {
+            pageField.value = currentDomain;
+        }
+
+        // Add UTM campaign parameter to backlink
+        const backlink = document.getElementById('backlink');
+        if (backlink) {
+            backlink.href = backlink.href + '&utm_campaign=' + encodeURIComponent(window.location.href);
+        }
+
+        // Track pageview with current domain as UTM source (for multi-domain tracking)
+        if (typeof plausible !== 'undefined') {
+            const trackingUrl = window.location.href + '?utm_source=' + encodeURIComponent(currentDomain);
+            plausible('pageview', { u: trackingUrl });
+        }
+
+        // Theme Toggle Handler
+        const themeToggle = document.getElementById('themeToggle');
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+                // Update DOM
+                document.documentElement.setAttribute('data-theme', newTheme);
+
+                // Save preference
+                localStorage.setItem('theme', newTheme);
+
+                // Track theme change in analytics (as tagged event)
+                if (typeof plausible !== 'undefined') {
+                    plausible('Theme Change', {
+                        u: window.location.href + '?utm_source=' + encodeURIComponent(currentDomain) + '&theme=' + newTheme
+                    });
+                }
+            });
+        }
+
+        // Form submission handling
+        const form = document.getElementById('emailForm');
+
+        if (form) {
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                // Add loading state
+                form.classList.add('submitting');
+
+                // Gather form data
+                const formData = new FormData(form);
+                const data = {
+                    firstName: formData.get('firstName'),
+                    email: formData.get('email'),
+                    winnie_pooh: formData.get('winnie_pooh'), // honeypot
+                    page: formData.get('page')
+                };
+
+                try {
+                    // Send to server
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    if (response.ok) {
+                        // Track successful submission in Plausible (as tagged event)
+                        if (typeof plausible !== 'undefined') {
+                            plausible('Form Submit', {
+                                u: window.location.href + '?utm_source=' + encodeURIComponent(currentDomain)
+                            });
+                        }
+
+                        // Show success message
+                        alert('Thanks! We\'ll notify you when ' + (prettyDomain || 'the site') + ' is ready.');
+                        form.reset();
+                    } else {
+                        throw new Error('Submission failed');
+                    }
+                } catch (error) {
+                    console.error('Form submission error:', error);
+                    alert('Oops! Something went wrong. Please try again.');
+                } finally {
+                    // Remove loading state
+                    form.classList.remove('submitting');
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
