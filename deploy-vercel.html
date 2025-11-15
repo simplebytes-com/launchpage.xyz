@@ -450,6 +450,16 @@ Value: cname.vercel-dns.com</code></pre>
             <strong>Note:</strong> Vercel Analytics is a paid feature on the free tier, but the basic Web Vitals dashboard is available for free.
         </div>
 
+        <h2>Configure Email Notifications</h2>
+        <p>To receive form submissions from your launchpage, you'll need to set up a Cloudflare Worker. This allows you to store and access visitor submissions.</p>
+
+        <p>Follow our complete guide: <a href="setup-notifications.html" style="color: var(--color-ocean); font-weight: 600;">Setup Email Notifications →</a></p>
+
+        <p>After setting up the Worker, update the form action in your <code>index.html</code> before deploying to Vercel:</p>
+
+        <pre><code>&lt;form class="email-form" id="emailForm" method="POST"
+      action="https://YOUR-WORKER-URL.workers.dev"&gt;</code></pre>
+
         <h2>Troubleshooting</h2>
 
         <h3>Domain not connecting?</h3>

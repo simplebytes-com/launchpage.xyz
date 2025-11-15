@@ -293,7 +293,7 @@
     </header>
 
     <div class="container">
-        <a href="docs.html" class="back-link">ê Back to Documentation</a>
+        <a href="docs.html" class="back-link">ÔøΩ Back to Documentation</a>
 
         <h1>Deploy to Cloudflare Pages</h1>
         <p class="intro">Deploy with Cloudflare's global CDN and DNS management. Perfect for domains already using Cloudflare, with automatic DNS configuration and enterprise-grade performance.</p>
@@ -389,7 +389,7 @@
         <p>Configure different branches for production and preview:</p>
 
         <ol>
-            <li>Go to project <strong>"Settings"</strong> í <strong>"Builds & deployments"</strong></li>
+            <li>Go to project <strong>"Settings"</strong> ÔøΩ <strong>"Builds & deployments"</strong></li>
             <li>Set <strong>"Production branch"</strong> (e.g., <code>main</code>)</li>
             <li>All other branches create preview deployments</li>
             <li>Preview URLs: <code>branch-name.your-project.pages.dev</code></li>
@@ -399,7 +399,7 @@
         <p>Cloudflare offers privacy-first web analytics:</p>
 
         <ol>
-            <li>In your Cloudflare dashboard, go to <strong>"Analytics"</strong> í <strong>"Web Analytics"</strong></li>
+            <li>In your Cloudflare dashboard, go to <strong>"Analytics"</strong> ÔøΩ <strong>"Web Analytics"</strong></li>
             <li>Click <strong>"Add a site"</strong></li>
             <li>Enter your domain</li>
             <li>Copy the provided JavaScript snippet</li>
@@ -415,6 +415,16 @@
             <li>Each domain will serve the same content</li>
             <li>The launchpage will automatically detect and display the correct domain name</li>
         </ol>
+
+        <h2>Configure Email Notifications</h2>
+        <p>To receive form submissions from your launchpage, you'll need to set up a Cloudflare Worker. This allows you to store and access visitor submissions.</p>
+
+        <p>Follow our complete guide: <a href="setup-notifications.html" style="color: var(--color-ocean); font-weight: 600;">Setup Email Notifications ‚Üí</a></p>
+
+        <p>After setting up the Worker, update the form action in your <code>index.html</code> before deploying to Cloudflare Pages:</p>
+
+        <pre><code>&lt;form class="email-form" id="emailForm" method="POST"
+      action="https://YOUR-WORKER-URL.workers.dev"&gt;</code></pre>
 
         <h2>Troubleshooting</h2>
 
@@ -463,7 +473,7 @@
         <p><strong>Need help?</strong> <a href="https://github.com/simplebytes-com/launchpage.xyz/issues" target="_blank">Open an issue on GitHub</a> or check the <a href="https://developers.cloudflare.com/pages/" target="_blank">Cloudflare Pages documentation</a>.</p>
 
         <p style="margin-top: 2rem;">
-            <a href="docs.html" class="back-link">ê Back to Documentation</a>
+            <a href="docs.html" class="back-link">ÔøΩ Back to Documentation</a>
         </p>
     </div>
 

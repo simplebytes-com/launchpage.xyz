@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Set up email notifications for Launchpage.xyz using Cloudflare Workers and KV storage. Complete guide with Wrangler CLI and UI setup instructions.">
+    <meta name="keywords" content="Cloudflare Workers, email notifications, KV storage, Wrangler, launchpage notifications, form submissions">
+    <title>Setup Email Notifications - Launchpage.xyz</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Setup Email Notifications - Launchpage.xyz">
+    <meta property="og:description" content="Complete guide to setting up email notifications using Cloudflare Workers and KV storage for Launchpage.xyz.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://launchpage.xyz/setup-notifications.html">
+    <meta property="og:image" content="https://launchpage.xyz/img/og-image.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Setup Email Notifications - Launchpage.xyz">
+    <meta name="twitter:description" content="Complete guide to setting up email notifications using Cloudflare Workers and KV storage.">
+    <meta name="twitter:image" content="https://launchpage.xyz/img/og-image.png">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" href="/img/favicons/favicon.ico">
+    <meta name="theme-color" content="#2C5F7C">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "Setup Email Notifications - Launchpage.xyz",
+        "description": "Complete guide to setting up email notifications using Cloudflare Workers and KV storage for form submissions.",
+        "author": {
+            "@type": "Organization",
+            "name": "Launchpage.xyz"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Launchpage.xyz"
+        },
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-01-01"
+    }
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Lexend:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-ocean: #2C5F7C;
+            --color-teal: #4A9BAE;
+            --color-dark: #1A2F42;
+            --color-gray-900: #0F1419;
+            --color-gray-800: #1C2430;
+            --color-gray-100: #F8FAFC;
+            --color-white: #FFFFFF;
+
+            --font-display: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            color: var(--color-dark);
+            background: var(--color-white);
+        }
+
+        .header {
+            background: var(--color-white);
+            border-bottom: 1px solid rgba(44, 95, 124, 0.1);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--color-ocean);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav a {
+            color: var(--color-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: var(--color-ocean);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--color-ocean);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+            color: var(--color-dark);
+            font-weight: 800;
+        }
+
+        .intro {
+            font-size: 1.25rem;
+            color: rgba(26, 47, 66, 0.7);
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin: 3rem 0 1rem;
+            color: var(--color-dark);
+            font-weight: 700;
+        }
+
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--color-ocean);
+            font-weight: 700;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        code {
+            font-family: var(--font-mono);
+            background: var(--color-gray-100);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.9em;
+            color: var(--color-ocean);
+        }
+
+        pre {
+            background: var(--color-gray-900);
+            color: #E6EDF3;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .note {
+            background: rgba(74, 155, 174, 0.1);
+            border-left: 4px solid var(--color-teal);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.25rem;
+        }
+
+        .note strong {
+            color: var(--color-ocean);
+        }
+
+        .warning {
+            background: rgba(255, 138, 91, 0.1);
+            border-left: 4px solid #FF8A5B;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.25rem;
+        }
+
+        .warning strong {
+            color: #FF6B3D;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                gap: 1rem;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">launchpage.xyz</a>
+            <nav class="nav">
+                <a href="/">Home</a>
+                <a href="example.html">Example</a>
+                <a href="docs.html">Documentation</a>
+                <a href="https://github.com/simplebytes-com/launchpage.xyz" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <a href="docs.html" class="back-link">ê Back to Documentation</a>
+
+        <h1>Setup Email Notifications</h1>
+        <p class="intro">Configure a Cloudflare Worker to receive and store email submissions from your launchpage. This guide covers both Wrangler CLI and UI-based setup methods.</p>
+
+        <h2>Overview</h2>
+        <p>Launchpage.xyz includes a contact form that submits visitor information. To receive these submissions, you'll deploy a Cloudflare Worker that:</p>
+
+        <ul>
+            <li><strong>Receives form submissions</strong> via HTTP POST</li>
+            <li><strong>Validates data</strong> and checks for spam using a honeypot field</li>
+            <li><strong>Stores submissions</strong> in Cloudflare KV (key-value storage)</li>
+            <li><strong>Supports multiple domains</strong> from a single Worker</li>
+            <li><strong>Includes CORS headers</strong> for cross-origin requests</li>
+        </ul>
+
+        <h2>Prerequisites</h2>
+        <ul>
+            <li>A Cloudflare account (free tier available at <a href="https://cloudflare.com" target="_blank">cloudflare.com</a>)</li>
+            <li>Node.js and npm installed (for Wrangler CLI method)</li>
+            <li>Basic command line knowledge (for CLI method)</li>
+        </ul>
+
+        <h2>The Worker Repository</h2>
+        <p>The contact form worker code is available at:</p>
+        <p><a href="https://github.com/simplebytes-com/launchpage-contact-worker" target="_blank" style="color: var(--color-ocean); font-weight: 600;">github.com/simplebytes-com/launchpage-contact-worker</a></p>
+
+        <h2>Method 1: Deploy via Wrangler CLI (Recommended)</h2>
+
+        <h3>Step 1: Clone the Worker Repository</h3>
+        <pre><code># Clone the worker repository
+git clone https://github.com/simplebytes-com/launchpage-contact-worker.git
+cd launchpage-contact-worker
+
+# Install dependencies
+npm install</code></pre>
+
+        <h3>Step 2: Install Wrangler</h3>
+        <pre><code># Install Wrangler globally
+npm install -g wrangler
+
+# Login to Cloudflare
+wrangler login</code></pre>
+
+        <p>This will open a browser window for you to authenticate with Cloudflare.</p>
+
+        <h3>Step 3: Create a KV Namespace</h3>
+        <p>Create a KV namespace to store form submissions:</p>
+
+        <pre><code># Create production KV namespace
+wrangler kv:namespace create "SUBMISSIONS"
+
+# Note the ID that's returned - you'll need it next</code></pre>
+
+        <p>Wrangler will output something like:</p>
+        <pre><code><  Creating namespace with title "launchpage-contact-worker-SUBMISSIONS"
+( Success!
+Add the following to your wrangler.toml:
+[[kv_namespaces]]
+binding = "SUBMISSIONS"
+id = "abc123def456..." </code></pre>
+
+        <h3>Step 4: Configure wrangler.toml</h3>
+        <p>Open <code>wrangler.toml</code> and update it with your settings:</p>
+
+        <pre><code>name = "launchpage-contact"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+# Add your Cloudflare Account ID
+account_id = "YOUR_ACCOUNT_ID_HERE"
+
+# KV namespace binding (use the ID from step 3)
+[[kv_namespaces]]
+binding = "SUBMISSIONS"
+id = "YOUR_KV_NAMESPACE_ID_HERE"
+
+# Custom domain route (optional)
+# routes = [
+#   { pattern = "contact.yourdomain.com/*", custom_domain = true }
+# ]</code></pre>
+
+        <div class="note">
+            <strong>Finding Your Account ID:</strong> Log into Cloudflare dashboard, select any domain, and look in the URL or right sidebar for your Account ID.
+        </div>
+
+        <h3>Step 5: Deploy the Worker</h3>
+        <pre><code># Deploy to Cloudflare
+wrangler deploy
+
+# Your worker will be available at:
+# https://launchpage-contact.YOUR_SUBDOMAIN.workers.dev</code></pre>
+
+        <h3>Step 6: Add a Custom Domain (Optional)</h3>
+        <p>For a cleaner URL, add a custom domain:</p>
+
+        <pre><code># Add custom domain via CLI
+wrangler domains add contact.yourdomain.com</code></pre>
+
+        <p>Or configure in <code>wrangler.toml</code>:</p>
+
+        <pre><code>routes = [
+    { pattern = "contact.yourdomain.com/*", custom_domain = true }
+]</code></pre>
+
+        <p>Then redeploy:</p>
+        <pre><code>wrangler deploy</code></pre>
+
+        <h2>Method 2: Deploy via Cloudflare Dashboard</h2>
+
+        <h3>Step 1: Create a KV Namespace</h3>
+        <ol>
+            <li>Log into <a href="https://dash.cloudflare.com" target="_blank">Cloudflare Dashboard</a></li>
+            <li>Go to <strong>Workers & Pages</strong> í <strong>KV</strong></li>
+            <li>Click <strong>"Create a namespace"</strong></li>
+            <li>Name it <code>SUBMISSIONS</code></li>
+            <li>Note the Namespace ID for later</li>
+        </ol>
+
+        <h3>Step 2: Create a Worker</h3>
+        <ol>
+            <li>Go to <strong>Workers & Pages</strong> í <strong>Overview</strong></li>
+            <li>Click <strong>"Create application"</strong> í <strong>"Create Worker"</strong></li>
+            <li>Name it <code>launchpage-contact</code></li>
+            <li>Click <strong>"Deploy"</strong></li>
+        </ol>
+
+        <h3>Step 3: Add the Worker Code</h3>
+        <ol>
+            <li>Click <strong>"Edit code"</strong> on your new Worker</li>
+            <li>Copy the code from <a href="https://github.com/simplebytes-com/launchpage-contact-worker/blob/main/src/index.js" target="_blank">GitHub repository</a></li>
+            <li>Paste it into the Worker editor</li>
+            <li>Click <strong>"Save and Deploy"</strong></li>
+        </ol>
+
+        <h3>Step 4: Bind the KV Namespace</h3>
+        <ol>
+            <li>In your Worker, go to <strong>Settings</strong> í <strong>Variables</strong></li>
+            <li>Scroll to <strong>"KV Namespace Bindings"</strong></li>
+            <li>Click <strong>"Add binding"</strong></li>
+            <li>Variable name: <code>SUBMISSIONS</code></li>
+            <li>KV namespace: Select the namespace you created</li>
+            <li>Click <strong>"Save"</strong></li>
+        </ol>
+
+        <h3>Step 5: Add Custom Domain (Optional)</h3>
+        <ol>
+            <li>Go to <strong>Triggers</strong> tab</li>
+            <li>Click <strong>"Add Custom Domain"</strong></li>
+            <li>Enter your domain (e.g., <code>contact.yourdomain.com</code>)</li>
+            <li>Add a CNAME DNS record if not on Cloudflare DNS</li>
+        </ol>
+
+        <h2>Update Your Launchpage HTML</h2>
+
+        <p>Once your Worker is deployed, update the form action in your <code>index.html</code>:</p>
+
+        <pre><code>&lt;form class="email-form" id="emailForm" method="POST"
+      action="https://YOUR-WORKER-URL"&gt;
+    &lt;!-- form fields --&gt;
+&lt;/form&gt;</code></pre>
+
+        <p>Replace <code>YOUR-WORKER-URL</code> with either:</p>
+        <ul>
+            <li>Your Workers.dev URL: <code>https://launchpage-contact.YOUR_SUBDOMAIN.workers.dev</code></li>
+            <li>Your custom domain: <code>https://contact.yourdomain.com</code></li>
+        </ul>
+
+        <div class="warning">
+            <strong>Important:</strong> After updating the form action URL, redeploy your launchpage to your hosting platform (Netlify, Vercel, etc.) for changes to take effect.
+        </div>
+
+        <h2>Worker Configuration Options</h2>
+
+        <h3>Allowed Origins (CORS)</h3>
+        <p>By default, the worker accepts requests from any origin. To restrict this, edit <code>src/index.js</code>:</p>
+
+        <pre><code>// Current (allows all)
+const allowedOrigins = ['*'];
+
+// Restrict to specific domains
+const allowedOrigins = [
+    'https://yourdomain.com',
+    'https://www.yourdomain.com',
+    'https://anotherdomain.com'
+];</code></pre>
+
+        <h3>Honeypot Field Name</h3>
+        <p>The Worker uses a honeypot field named <code>winnie_pooh</code> to catch spam bots. This field should be hidden in your HTML and left empty by real users:</p>
+
+        <pre><code>&lt;!-- Honeypot field (invisible to users) --&gt;
+&lt;div class="honeypot"&gt;
+    &lt;label for="winnie_pooh"&gt;Your favorite character (leave blank):&lt;/label&gt;
+    &lt;input type="text" name="winnie_pooh" id="winnie_pooh"
+           autocomplete="off" tabindex="-1"&gt;
+&lt;/div&gt;</code></pre>
+
+        <p>Bots typically fill all fields, so if <code>winnie_pooh</code> has a value, the submission is silently rejected.</p>
+
+        <h2>Viewing Submissions</h2>
+
+        <h3>Method 1: Via Wrangler CLI</h3>
+        <pre><code># List all keys in KV namespace
+wrangler kv:key list --namespace-id=YOUR_NAMESPACE_ID
+
+# Get a specific submission
+wrangler kv:key get "submission:example.com:1234567890" --namespace-id=YOUR_NAMESPACE_ID</code></pre>
+
+        <h3>Method 2: Via Cloudflare Dashboard</h3>
+        <ol>
+            <li>Go to <strong>Workers & Pages</strong> í <strong>KV</strong></li>
+            <li>Click on your <code>SUBMISSIONS</code> namespace</li>
+            <li>Browse stored keys and values</li>
+            <li>Click any key to view the submission data</li>
+        </ol>
+
+        <h3>Submission Data Format</h3>
+        <p>Each submission is stored as JSON with this structure:</p>
+
+        <pre><code>{
+    "firstName": "John",
+    "email": "john@example.com",
+    "page": "example.com",
+    "timestamp": "2025-01-15T10:30:00.000Z",
+    "ip": "192.0.2.1",
+    "userAgent": "Mozilla/5.0..."
+}</code></pre>
+
+        <p>The key format is: <code>submission:{domain}:{timestamp}</code></p>
+
+        <h2>Testing Your Setup</h2>
+
+        <h3>Test Submission</h3>
+        <p>Test with curl to verify your Worker is working:</p>
+
+        <pre><code>curl -X POST https://YOUR-WORKER-URL \
+  -H "Content-Type: application/json" \
+  -d '{
+    "firstName": "Test",
+    "email": "test@example.com",
+    "winnie_pooh": "",
+    "page": "test.com"
+  }'</code></pre>
+
+        <p>You should receive:</p>
+        <pre><code>{
+    "success": true,
+    "message": "Thank you for your submission"
+}</code></pre>
+
+        <h3>Test Honeypot Protection</h3>
+        <p>Verify spam protection by filling the honeypot:</p>
+
+        <pre><code>curl -X POST https://YOUR-WORKER-URL \
+  -H "Content-Type: application/json" \
+  -d '{
+    "firstName": "Bot",
+    "email": "bot@spam.com",
+    "winnie_pooh": "I am a bot",
+    "page": "test.com"
+  }'</code></pre>
+
+        <p>This should return success (to fool the bot) but NOT store the submission in KV.</p>
+
+        <h2>Troubleshooting</h2>
+
+        <h3>Form submissions not being received?</h3>
+        <ul>
+            <li>Verify the Worker is deployed: Check Workers dashboard</li>
+            <li>Confirm the form action URL is correct in index.html</li>
+            <li>Check CORS: Ensure your domain is in allowed origins</li>
+            <li>View Worker logs: Go to Worker í Logs & Analytics</li>
+        </ul>
+
+        <h3>KV binding errors?</h3>
+        <ul>
+            <li>Verify KV namespace ID in wrangler.toml is correct</li>
+            <li>Ensure binding name is exactly <code>SUBMISSIONS</code></li>
+            <li>Redeploy after making configuration changes</li>
+        </ul>
+
+        <h3>CORS errors in browser?</h3>
+        <ul>
+            <li>Check browser console for specific error</li>
+            <li>Verify your domain is in the allowed origins list</li>
+            <li>Ensure Worker returns proper CORS headers</li>
+        </ul>
+
+        <h2>Updating the Worker</h2>
+
+        <p>To update the Worker code:</p>
+
+        <pre><code># Pull latest changes
+cd launchpage-contact-worker
+git pull origin main
+
+# Redeploy
+wrangler deploy</code></pre>
+
+        <h2>Cost Considerations</h2>
+
+        <p>Cloudflare Workers and KV are very affordable:</p>
+
+        <ul>
+            <li><strong>Workers:</strong> 100,000 requests/day free, then $0.50 per million requests</li>
+            <li><strong>KV Storage:</strong> 1GB storage free, then $0.50/GB/month</li>
+            <li><strong>KV Reads:</strong> 100,000/day free, then $0.50 per million reads</li>
+            <li><strong>KV Writes:</strong> 1,000/day free, then $5 per million writes</li>
+        </ul>
+
+        <p>For most launchpage use cases, you'll stay well within the free tier.</p>
+
+        <div class="note">
+            <strong>Pro Tip:</strong> Set up a separate Worker for each project or use environment variables to route submissions to different KV namespaces based on the domain.
+        </div>
+
+        <hr style="margin: 3rem 0; border: none; border-top: 1px solid rgba(44, 95, 124, 0.1);">
+
+        <p><strong>Need help?</strong> <a href="https://github.com/simplebytes-com/launchpage-contact-worker/issues" target="_blank">Open an issue on GitHub</a> or check the <a href="https://developers.cloudflare.com/workers/" target="_blank">Cloudflare Workers documentation</a>.</p>
+
+        <p style="margin-top: 2rem;">
+            <a href="docs.html" class="back-link">ê Back to Documentation</a>
+        </p>
+    </div>
+
+    <!-- Analytics -->
+    <script defer data-domain="launchpage.xyz" src="https://analytics.simplebytes.com/js/script.pageview-props.tagged-events.js"></script>
+</body>
+</html>
