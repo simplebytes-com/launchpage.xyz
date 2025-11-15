@@ -240,15 +240,14 @@
         <p class="intro">Learn how to deploy Launchpage.xyz to your favorite platform and give your domains a professional presence.</p>
 
         <div class="toc">
-            <h2>Table of Contents</h2>
+            <h2>Choose Your Platform</h2>
             <ul>
-                <li><a href="#quickstart">Quick Start</a></li>
-                <li><a href="#netlify">Netlify Deployment</a></li>
-                <li><a href="#vercel">Vercel Deployment</a></li>
-                <li><a href="#github-pages">GitHub Pages Deployment</a></li>
-                <li><a href="#cloudflare-pages">Cloudflare Pages Deployment</a></li>
-                <li><a href="#hetzner">Hetzner VPS Deployment with Nginx</a></li>
-                <li><a href="#customization">Customization</a></li>
+                <li><a href="deploy-netlify.html">→ Deploy to Netlify</a></li>
+                <li><a href="deploy-vercel.html">→ Deploy to Vercel</a></li>
+                <li><a href="deploy-github-pages.html">→ Deploy to GitHub Pages</a></li>
+                <li><a href="deploy-cloudflare-pages.html">→ Deploy to Cloudflare Pages</a></li>
+                <li><a href="deploy-hetzner.html">→ Deploy to Hetzner VPS</a></li>
+                <li><a href="#customization">Customization Guide</a></li>
             </ul>
         </div>
 
@@ -267,285 +266,54 @@
         <pre><code>git clone https://github.com/simplebytes-com/launchpage.xyz.git
 cd launchpage.xyz</code></pre>
 
-        <h2 id="netlify">Netlify Deployment</h2>
-        <p>Netlify is one of the easiest platforms to deploy static sites.</p>
+        <h2>Platform Comparison</h2>
+        <p>Choose the deployment platform that best fits your needs:</p>
 
-        <h3>Method 1: Deploy via Netlify UI</h3>
-        <ol>
-            <li>Go to <a href="https://netlify.com" target="_blank">netlify.com</a> and sign up/login</li>
-            <li>Click "Add new site" → "Import an existing project"</li>
-            <li>Connect to your Git provider (GitHub, GitLab, etc.)</li>
-            <li>Select the <code>launchpage.xyz</code> repository</li>
-            <li>Build settings:
-                <ul>
-                    <li><strong>Build command:</strong> (leave empty)</li>
-                    <li><strong>Publish directory:</strong> <code>.</code> (root)</li>
-                </ul>
-            </li>
-            <li>Click "Deploy site"</li>
-        </ol>
-
-        <h3>Method 2: Deploy via Netlify CLI</h3>
-        <pre><code># Install Netlify CLI
-npm install -g netlify-cli
-
-# Login to Netlify
-netlify login
-
-# Deploy
-netlify deploy --prod</code></pre>
-
-        <h3>Add Your Custom Domain</h3>
-        <ol>
-            <li>In Netlify dashboard, go to "Site settings" → "Domain management"</li>
-            <li>Click "Add custom domain"</li>
-            <li>Enter your domain (e.g., <code>example.com</code>)</li>
-            <li>Follow the DNS configuration instructions:
-                <ul>
-                    <li>Add an A record pointing to Netlify's load balancer (IP shown in dashboard)</li>
-                    <li>Or add a CNAME record: <code>your-site.netlify.app</code></li>
-                </ul>
-            </li>
-            <li>Enable HTTPS (automatic with Netlify)</li>
-        </ol>
-
-        <div class="note">
-            <strong>Note:</strong> For multiple domains, you can add each one as a custom domain in Netlify. They'll all serve the same launchpage!
-        </div>
-
-        <h2 id="vercel">Vercel Deployment</h2>
-        <p>Vercel offers similar simplicity to Netlify.</p>
-
-        <h3>Method 1: Deploy via Vercel UI</h3>
-        <ol>
-            <li>Go to <a href="https://vercel.com" target="_blank">vercel.com</a> and sign up/login</li>
-            <li>Click "Add New" → "Project"</li>
-            <li>Import your Git repository</li>
-            <li>Vercel will auto-detect it as a static site</li>
-            <li>Click "Deploy"</li>
-        </ol>
-
-        <h3>Method 2: Deploy via Vercel CLI</h3>
-        <pre><code># Install Vercel CLI
-npm install -g vercel
-
-# Deploy
-vercel --prod</code></pre>
-
-        <h3>Add Your Custom Domain</h3>
-        <ol>
-            <li>Go to project "Settings" → "Domains"</li>
-            <li>Add your domain</li>
-            <li>Configure DNS:
-                <ul>
-                    <li>Add a CNAME record pointing to <code>cname.vercel-dns.com</code></li>
-                    <li>Or add an A record to Vercel's IP (shown in dashboard)</li>
-                </ul>
-            </li>
-            <li>SSL is automatic</li>
-        </ol>
-
-        <h2 id="github-pages">GitHub Pages Deployment</h2>
-        <p>Host directly from your GitHub repository for free.</p>
-
-        <h3>Setup Steps</h3>
-        <ol>
-            <li>Push your code to a GitHub repository</li>
-            <li>Go to repository "Settings" → "Pages"</li>
-            <li>Under "Source", select:
-                <ul>
-                    <li><strong>Branch:</strong> <code>main</code> (or your branch name)</li>
-                    <li><strong>Folder:</strong> <code>/ (root)</code></li>
-                </ul>
-            </li>
-            <li>Click "Save"</li>
-            <li>Your site will be live at <code>https://yourusername.github.io/launchpage.xyz</code></li>
-        </ol>
-
-        <h3>Custom Domain Setup</h3>
-        <ol>
-            <li>In GitHub Pages settings, add your custom domain</li>
-            <li>Create a file named <code>CNAME</code> in your repository root with your domain:
-                <pre><code>example.com</code></pre>
-            </li>
-            <li>Configure DNS at your domain registrar:
-                <ul>
-                    <li><strong>For root domain (example.com):</strong><br>
-                        Add A records pointing to GitHub's IPs:
-                        <pre><code>185.199.108.153
-185.199.109.153
-185.199.110.153
-185.199.111.153</code></pre>
-                    </li>
-                    <li><strong>For www subdomain:</strong><br>
-                        Add CNAME: <code>yourusername.github.io</code>
-                    </li>
-                </ul>
-            </li>
-            <li>Enable "Enforce HTTPS" in GitHub Pages settings</li>
-        </ol>
-
-        <h2 id="cloudflare-pages">Cloudflare Pages Deployment</h2>
-        <p>Deploy with Cloudflare's global CDN and DNS management.</p>
-
-        <h3>Deployment Steps</h3>
-        <ol>
-            <li>Go to <a href="https://pages.cloudflare.com" target="_blank">Cloudflare Pages</a></li>
-            <li>Click "Create a project"</li>
-            <li>Connect your Git provider</li>
-            <li>Select the repository</li>
-            <li>Build settings:
-                <ul>
-                    <li><strong>Framework preset:</strong> None</li>
-                    <li><strong>Build command:</strong> (leave empty)</li>
-                    <li><strong>Build output directory:</strong> <code>.</code></li>
-                </ul>
-            </li>
-            <li>Click "Save and Deploy"</li>
-        </ol>
-
-        <h3>Custom Domain</h3>
-        <ol>
-            <li>Go to project → "Custom domains"</li>
-            <li>Add your domain</li>
-            <li>If domain is on Cloudflare, DNS is configured automatically</li>
-            <li>If not, add CNAME record to your Cloudflare Pages URL</li>
-        </ol>
-
-        <h2 id="hetzner">Hetzner VPS Deployment with Nginx</h2>
-        <p>For those who prefer full control, deploy on a VPS with Nginx to serve any incoming domain.</p>
-
-        <h3>Prerequisites</h3>
-        <ul>
-            <li>A Hetzner VPS (or any Ubuntu/Debian server)</li>
-            <li>Root or sudo access</li>
-            <li>Basic command line knowledge</li>
-        </ul>
-
-        <h3>Step 1: Set Up the Server</h3>
-        <pre><code># SSH into your server
-ssh root@your-server-ip
-
-# Update system
-apt update && apt upgrade -y
-
-# Install Nginx and Git
-apt install nginx git -y
-
-# Install Certbot for SSL
-apt install certbot python3-certbot-nginx -y</code></pre>
-
-        <h3>Step 2: Clone the Repository</h3>
-        <pre><code># Create web directory
-mkdir -p /var/www/launchpage
-
-# Clone repository
-cd /var/www/launchpage
-git clone https://github.com/simplebytes-com/launchpage.xyz.git .
-
-# Set proper permissions
-chown -R www-data:www-data /var/www/launchpage
-chmod -R 755 /var/www/launchpage</code></pre>
-
-        <h3>Step 3: Configure Nginx (Catch-All for Any Domain)</h3>
-        <p>Create an Nginx configuration that serves launchpage for <strong>any</strong> domain pointing to your server:</p>
-
-        <pre><code># Create Nginx config
-nano /etc/nginx/sites-available/launchpage
-
-# Add this configuration:</code></pre>
-
-        <pre><code>server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-
-    # Catch all server names
-    server_name _;
-
-    root /var/www/launchpage;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
-
-    # Serve static files
-    location ~* \.(jpg|jpeg|png|gif|ico|css|js|svg)$ {
-        expires 7d;
-        add_header Cache-Control "public, immutable";
-    }
-}</code></pre>
-
-        <h3>Step 4: Enable the Configuration</h3>
-        <pre><code># Remove default config
-rm /etc/nginx/sites-enabled/default
-
-# Enable our config
-ln -s /etc/nginx/sites-available/launchpage /etc/nginx/sites-enabled/
-
-# Test configuration
-nginx -t
-
-# Restart Nginx
-systemctl restart nginx
-systemctl enable nginx</code></pre>
-
-        <h3>Step 5: Point Your Domains</h3>
-        <p>For each domain you want to use:</p>
-        <ol>
-            <li>Add an A record pointing to your server's IP:
-                <ul>
-                    <li><strong>Type:</strong> A</li>
-                    <li><strong>Name:</strong> @ (root) or www</li>
-                    <li><strong>Value:</strong> Your server IP (e.g., 157.245.16.45)</li>
-                </ul>
-            </li>
-            <li>Wait for DNS propagation (usually 5-30 minutes)</li>
-        </ol>
-
-        <h3>Step 6: Add SSL Certificates (Optional but Recommended)</h3>
-        <p>Add SSL for specific domains:</p>
-
-        <pre><code># For a specific domain
-certbot --nginx -d example.com -d www.example.com
-
-# Or for wildcard (requires DNS validation)
-certbot certonly --manual --preferred-challenges=dns -d *.example.com -d example.com</code></pre>
-
-        <p>Update your Nginx config to include specific domains with SSL:</p>
-
-        <pre><code>server {
-    listen 80;
-    listen [::]:80;
-    server_name example.com www.example.com;
-    return 301 https://$server_name$request_uri;
-}
-
-server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
-    server_name example.com www.example.com;
-
-    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
-
-    root /var/www/launchpage;
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
-}</code></pre>
-
-        <h3>Updating Your Launchpage</h3>
-        <p>To update to the latest version:</p>
-
-        <pre><code>cd /var/www/launchpage
-git pull origin main
-systemctl reload nginx</code></pre>
+        <table style="width: 100%; border-collapse: collapse; margin: 2rem 0;">
+            <thead>
+                <tr style="background: var(--color-gray-100);">
+                    <th style="padding: 1rem; text-align: left; border: 1px solid rgba(44, 95, 124, 0.1);">Platform</th>
+                    <th style="padding: 1rem; text-align: left; border: 1px solid rgba(44, 95, 124, 0.1);">Best For</th>
+                    <th style="padding: 1rem; text-align: left; border: 1px solid rgba(44, 95, 124, 0.1);">Key Features</th>
+                    <th style="padding: 1rem; text-align: left; border: 1px solid rgba(44, 95, 124, 0.1);">Difficulty</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);"><a href="deploy-netlify.html" style="color: var(--color-ocean); font-weight: 600;">Netlify</a></td>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);">Beginners, quick setup</td>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);">Auto SSL, CDN, easy DNS</td>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);">⭐ Easy</td>
+                </tr>
+                <tr>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);"><a href="deploy-vercel.html" style="color: var(--color-ocean); font-weight: 600;">Vercel</a></td>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);">Fast global delivery</td>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);">Edge network, instant deploys</td>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);">⭐ Easy</td>
+                </tr>
+                <tr>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);"><a href="deploy-github-pages.html" style="color: var(--color-ocean); font-weight: 600;">GitHub Pages</a></td>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);">GitHub users, free hosting</td>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);">100% free, Git integration</td>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);">⭐⭐ Moderate</td>
+                </tr>
+                <tr>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);"><a href="deploy-cloudflare-pages.html" style="color: var(--color-ocean); font-weight: 600;">Cloudflare Pages</a></td>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);">Cloudflare users, global CDN</td>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);">275+ PoPs, DDoS protection</td>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);">⭐⭐ Moderate</td>
+                </tr>
+                <tr>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);"><a href="deploy-hetzner.html" style="color: var(--color-ocean); font-weight: 600;">Hetzner VPS</a></td>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);">Full control, unlimited domains</td>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);">Catch-all config, server access</td>
+                    <td style="padding: 1rem; border: 1px solid rgba(44, 95, 124, 0.1);">⭐⭐⭐ Advanced</td>
+                </tr>
+            </tbody>
+        </table>
 
         <div class="note">
-            <strong>Pro Tip:</strong> The catch-all configuration means ANY domain pointing to your server will show the launchpage. Perfect for managing multiple domains!
+            <strong>Quick Recommendation:</strong> If you're just getting started, choose <a href="deploy-netlify.html">Netlify</a> or <a href="deploy-vercel.html">Vercel</a> for the easiest setup. If you want to manage many domains from one server, consider <a href="deploy-hetzner.html">Hetzner VPS</a>.
         </div>
 
         <h2 id="customization">Customization</h2>
