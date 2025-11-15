@@ -59,6 +59,112 @@
     }
     </script>
 
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Launchpage.xyz?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Launchpage.xyz is a free, open-source landing page template for newly registered domains. It helps you avoid showing empty pages or default registrar ads by providing a clean, professional presence while you build your main site."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does Launchpage.xyz cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Launchpage.xyz is completely free and open source under the MIT license. There are no costs, subscriptions, or hidden fees. You can use it for unlimited domains."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which hosting platforms are supported?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Launchpage.xyz works with all major hosting platforms including Netlify, Vercel, GitHub Pages, Cloudflare Pages, and any VPS or web server. It's just static HTML, CSS, and JavaScript with no dependencies or build process required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I collect email addresses from visitors?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! Launchpage.xyz includes a built-in email collection form. You can deploy the optional Cloudflare Worker (also free and open source) to store submissions in Cloudflare KV storage. Full setup instructions are provided in the documentation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Launchpage.xyz work with multiple domains?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! The page automatically detects the current domain name via JavaScript and displays it dynamically. You can deploy once and point multiple domains to the same deployment, or customize each domain individually."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need coding knowledge to use Launchpage.xyz?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Basic knowledge is helpful but not required. Our deployment guides walk you through step-by-step setup for platforms like Netlify and Vercel, which require no coding. To customize colors and text, basic HTML/CSS knowledge is recommended."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Launchpage.xyz mobile-friendly?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! Launchpage.xyz is fully responsive and optimized for all devices including phones, tablets, and desktops. It includes a dark mode toggle and works perfectly on screens from 320px to 4K displays."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I customize the design and colors?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely! The template uses CSS variables for easy customization. You can change colors, fonts, text, images, and layout by editing the HTML file. No build process or compilation required."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Site Navigation for Sitelinks -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Launchpage.xyz",
+      "url": "https://launchpage.xyz/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://domaindetails.com/results?domain={search_term_string}&utm_source=launchpage.xyz"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
+    <!-- Organization Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Launchpage.xyz",
+      "url": "https://launchpage.xyz/",
+      "logo": "https://launchpage.xyz/img/favicons/apple-touch-icon.png",
+      "sameAs": [
+        "https://github.com/simplebytes-com/launchpage.xyz"
+      ]
+    }
+    </script>
+
     <style>
         /* Design System Variables */
         :root {
@@ -624,7 +730,7 @@
             <nav class="nav">
                 <a href="#why">Why</a>
                 <a href="#features">Features</a>
-                <a href="#lookup">Check Launchpage Sites</a>
+                <a href="#faq">FAQ</a>
                 <a href="docs.html">Docs</a>
                 <a href="https://github.com/simplebytes-com/launchpage.xyz" target="_blank">GitHub</a>
             </nav>
@@ -770,6 +876,109 @@
             </div>
         </div>
     </section>
+
+    <!-- FAQ Section -->
+    <section class="section" id="faq" style="background: var(--color-gray-100);">
+        <div class="section-content">
+            <div class="section-header">
+                <div class="section-label">Questions & Answers</div>
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-description">Everything you need to know about Launchpage.xyz</p>
+            </div>
+
+            <div style="max-width: 800px; margin: 0 auto;">
+                <details class="faq-item" style="background: var(--color-white); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem; cursor: pointer; box-shadow: var(--shadow-md); transition: all 0.2s;">
+                    <summary style="font-family: var(--font-display); font-size: 1.125rem; font-weight: 600; color: var(--color-dark); list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                        What is Launchpage.xyz?
+                        <span style="color: var(--color-primary); font-size: 1.5rem; transition: transform 0.2s;">+</span>
+                    </summary>
+                    <p style="margin-top: 1rem; color: var(--color-gray-700); line-height: 1.7;">
+                        Launchpage.xyz is a free, open-source landing page template for newly registered domains. It helps you avoid showing empty pages or default registrar ads by providing a clean, professional presence while you build your main site.
+                    </p>
+                </details>
+
+                <details class="faq-item" style="background: var(--color-white); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem; cursor: pointer; box-shadow: var(--shadow-md); transition: all 0.2s;">
+                    <summary style="font-family: var(--font-display); font-size: 1.125rem; font-weight: 600; color: var(--color-dark); list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                        How much does Launchpage.xyz cost?
+                        <span style="color: var(--color-primary); font-size: 1.5rem; transition: transform 0.2s;">+</span>
+                    </summary>
+                    <p style="margin-top: 1rem; color: var(--color-gray-700); line-height: 1.7;">
+                        Launchpage.xyz is completely free and open source under the MIT license. There are no costs, subscriptions, or hidden fees. You can use it for unlimited domains.
+                    </p>
+                </details>
+
+                <details class="faq-item" style="background: var(--color-white); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem; cursor: pointer; box-shadow: var(--shadow-md); transition: all 0.2s;">
+                    <summary style="font-family: var(--font-display); font-size: 1.125rem; font-weight: 600; color: var(--color-dark); list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                        Which hosting platforms are supported?
+                        <span style="color: var(--color-primary); font-size: 1.5rem; transition: transform 0.2s;">+</span>
+                    </summary>
+                    <p style="margin-top: 1rem; color: var(--color-gray-700); line-height: 1.7;">
+                        Launchpage.xyz works with all major hosting platforms including Netlify, Vercel, GitHub Pages, Cloudflare Pages, and any VPS or web server. It's just static HTML, CSS, and JavaScript with no dependencies or build process required.
+                    </p>
+                </details>
+
+                <details class="faq-item" style="background: var(--color-white); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem; cursor: pointer; box-shadow: var(--shadow-md); transition: all 0.2s;">
+                    <summary style="font-family: var(--font-display); font-size: 1.125rem; font-weight: 600; color: var(--color-dark); list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                        Can I collect email addresses from visitors?
+                        <span style="color: var(--color-primary); font-size: 1.5rem; transition: transform 0.2s;">+</span>
+                    </summary>
+                    <p style="margin-top: 1rem; color: var(--color-gray-700); line-height: 1.7;">
+                        Yes! Launchpage.xyz includes a built-in email collection form. You can deploy the optional Cloudflare Worker (also free and open source) to store submissions in Cloudflare KV storage. Full setup instructions are provided in the <a href="setup-notifications.html" style="color: var(--color-primary); font-weight: 600; text-decoration: none;">documentation</a>.
+                    </p>
+                </details>
+
+                <details class="faq-item" style="background: var(--color-white); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem; cursor: pointer; box-shadow: var(--shadow-md); transition: all 0.2s;">
+                    <summary style="font-family: var(--font-display); font-size: 1.125rem; font-weight: 600; color: var(--color-dark); list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                        Does Launchpage.xyz work with multiple domains?
+                        <span style="color: var(--color-primary); font-size: 1.5rem; transition: transform 0.2s;">+</span>
+                    </summary>
+                    <p style="margin-top: 1rem; color: var(--color-gray-700); line-height: 1.7;">
+                        Yes! The page automatically detects the current domain name via JavaScript and displays it dynamically. You can deploy once and point multiple domains to the same deployment, or customize each domain individually.
+                    </p>
+                </details>
+
+                <details class="faq-item" style="background: var(--color-white); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem; cursor: pointer; box-shadow: var(--shadow-md); transition: all 0.2s;">
+                    <summary style="font-family: var(--font-display); font-size: 1.125rem; font-weight: 600; color: var(--color-dark); list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                        Do I need coding knowledge to use Launchpage.xyz?
+                        <span style="color: var(--color-primary); font-size: 1.5rem; transition: transform 0.2s;">+</span>
+                    </summary>
+                    <p style="margin-top: 1rem; color: var(--color-gray-700); line-height: 1.7;">
+                        Basic knowledge is helpful but not required. Our deployment guides walk you through step-by-step setup for platforms like Netlify and Vercel, which require no coding. To customize colors and text, basic HTML/CSS knowledge is recommended.
+                    </p>
+                </details>
+
+                <details class="faq-item" style="background: var(--color-white); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem; cursor: pointer; box-shadow: var(--shadow-md); transition: all 0.2s;">
+                    <summary style="font-family: var(--font-display); font-size: 1.125rem; font-weight: 600; color: var(--color-dark); list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                        Is Launchpage.xyz mobile-friendly?
+                        <span style="color: var(--color-primary); font-size: 1.5rem; transition: transform 0.2s;">+</span>
+                    </summary>
+                    <p style="margin-top: 1rem; color: var(--color-gray-700); line-height: 1.7;">
+                        Yes! Launchpage.xyz is fully responsive and optimized for all devices including phones, tablets, and desktops. It includes a dark mode toggle and works perfectly on screens from 320px to 4K displays.
+                    </p>
+                </details>
+
+                <details class="faq-item" style="background: var(--color-white); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem; cursor: pointer; box-shadow: var(--shadow-md); transition: all 0.2s;">
+                    <summary style="font-family: var(--font-display); font-size: 1.125rem; font-weight: 600; color: var(--color-dark); list-style: none; display: flex; justify-content: space-between; align-items: center;">
+                        Can I customize the design and colors?
+                        <span style="color: var(--color-primary); font-size: 1.5rem; transition: transform 0.2s;">+</span>
+                    </summary>
+                    <p style="margin-top: 1rem; color: var(--color-gray-700); line-height: 1.7;">
+                        Absolutely! The template uses CSS variables for easy customization. You can change colors, fonts, text, images, and layout by editing the HTML file. No build process or compilation required.
+                    </p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        details[open] summary span {
+            transform: rotate(45deg);
+        }
+        .faq-item:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+    </style>
 
     <!-- Partners Section -->
     <section class="section partners">
