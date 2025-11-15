@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Deploy Launchpage.xyz to GitHub Pages for free static hosting. Complete guide with custom domain setup and SSL configuration.">
+    <meta name="keywords" content="GitHub Pages deployment, launchpage, free hosting, GitHub Actions, custom domain, static site">
+    <title>Deploy to GitHub Pages - Launchpage.xyz</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Deploy to GitHub Pages - Launchpage.xyz">
+    <meta property="og:description" content="Host Launchpage.xyz for free on GitHub Pages with custom domain support and automatic SSL.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://launchpage.xyz/deploy-github-pages.html">
+    <meta property="og:image" content="https://launchpage.xyz/img/og-image.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Deploy to GitHub Pages - Launchpage.xyz">
+    <meta name="twitter:description" content="Host Launchpage.xyz for free on GitHub Pages with custom domain support and automatic SSL.">
+    <meta name="twitter:image" content="https://launchpage.xyz/img/og-image.png">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" href="/img/favicons/favicon.ico">
+    <meta name="theme-color" content="#2C5F7C">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "Deploy to GitHub Pages - Launchpage.xyz",
+        "description": "Complete guide to deploy Launchpage.xyz to GitHub Pages with free hosting and custom domain support.",
+        "author": {
+            "@type": "Organization",
+            "name": "Launchpage.xyz"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Launchpage.xyz"
+        },
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01"
+    }
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Lexend:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-ocean: #2C5F7C;
+            --color-teal: #4A9BAE;
+            --color-dark: #1A2F42;
+            --color-gray-900: #0F1419;
+            --color-gray-800: #1C2430;
+            --color-gray-100: #F8FAFC;
+            --color-white: #FFFFFF;
+
+            --font-display: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            color: var(--color-dark);
+            background: var(--color-white);
+        }
+
+        .header {
+            background: var(--color-white);
+            border-bottom: 1px solid rgba(44, 95, 124, 0.1);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--color-ocean);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav a {
+            color: var(--color-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: var(--color-ocean);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--color-ocean);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+            color: var(--color-dark);
+            font-weight: 800;
+        }
+
+        .intro {
+            font-size: 1.25rem;
+            color: rgba(26, 47, 66, 0.7);
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin: 3rem 0 1rem;
+            color: var(--color-dark);
+            font-weight: 700;
+        }
+
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--color-ocean);
+            font-weight: 700;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        code {
+            font-family: var(--font-mono);
+            background: var(--color-gray-100);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.9em;
+            color: var(--color-ocean);
+        }
+
+        pre {
+            background: var(--color-gray-900);
+            color: #E6EDF3;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .note {
+            background: rgba(74, 155, 174, 0.1);
+            border-left: 4px solid var(--color-teal);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.25rem;
+        }
+
+        .note strong {
+            color: var(--color-ocean);
+        }
+
+        .platform-nav {
+            background: var(--color-gray-100);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            margin: 3rem 0;
+        }
+
+        .platform-nav h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .platform-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            list-style: none;
+            margin: 0;
+        }
+
+        .platform-links li {
+            margin: 0;
+        }
+
+        .platform-links a {
+            display: block;
+            padding: 1rem;
+            background: var(--color-white);
+            border-radius: 0.5rem;
+            color: var(--color-ocean);
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .platform-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                gap: 1rem;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">launchpage.xyz</a>
+            <nav class="nav">
+                <a href="/">Home</a>
+                <a href="example.html">Example</a>
+                <a href="docs.html">Documentation</a>
+                <a href="https://github.com/simplebytes-com/launchpage.xyz" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <a href="docs.html" class="back-link">← Back to Documentation</a>
+
+        <h1>Deploy to GitHub Pages</h1>
+        <p class="intro">Host your launchpage directly from your GitHub repository with GitHub Pages. It's completely free, includes SSL, and integrates seamlessly with your Git workflow.</p>
+
+        <h2>Why GitHub Pages?</h2>
+        <ul>
+            <li><strong>100% free</strong> - No cost for public repositories</li>
+            <li><strong>Git-based</strong> - Deploy by pushing to your repository</li>
+            <li><strong>Automatic SSL</strong> - Free HTTPS for custom domains</li>
+            <li><strong>Simple setup</strong> - Enable with a few clicks</li>
+            <li><strong>GitHub integration</strong> - Manage everything from your repo</li>
+        </ul>
+
+        <h2>Prerequisites</h2>
+        <ul>
+            <li>A GitHub account</li>
+            <li>Your Launchpage.xyz code in a GitHub repository</li>
+            <li>A registered domain name (for custom domain setup)</li>
+        </ul>
+
+        <h2>Step 1: Push Your Code to GitHub</h2>
+        <p>If you haven't already, push your launchpage to a GitHub repository:</p>
+
+        <pre><code># Initialize git (if not already done)
+git init
+
+# Add your files
+git add .
+
+# Commit
+git commit -m "Initial commit"
+
+# Add GitHub remote
+git remote add origin https://github.com/yourusername/launchpage.xyz.git
+
+# Push to GitHub
+git push -u origin main</code></pre>
+
+        <h2>Step 2: Enable GitHub Pages</h2>
+        <ol>
+            <li>Go to your repository on GitHub</li>
+            <li>Click <strong>"Settings"</strong> (in the repository menu)</li>
+            <li>Scroll down to <strong>"Pages"</strong> in the left sidebar</li>
+            <li>Under <strong>"Source"</strong>, configure:
+                <ul>
+                    <li><strong>Branch:</strong> Select <code>main</code> (or your branch name)</li>
+                    <li><strong>Folder:</strong> Select <code>/ (root)</code></li>
+                </ul>
+            </li>
+            <li>Click <strong>"Save"</strong></li>
+        </ol>
+
+        <p>GitHub will build and deploy your site. Within a few minutes, it will be live at:</p>
+        <pre><code>https://yourusername.github.io/launchpage.xyz</code></pre>
+
+        <div class="note">
+            <strong>Note:</strong> If your repository is named <code>yourusername.github.io</code>, the site will be available at <code>https://yourusername.github.io</code> (without the repo name in the URL).
+        </div>
+
+        <h2>Step 3: Add Your Custom Domain</h2>
+        <p>Now let's connect your custom domain to GitHub Pages:</p>
+
+        <h3>In GitHub Settings</h3>
+        <ol>
+            <li>In <strong>"Settings"</strong> → <strong>"Pages"</strong>, find <strong>"Custom domain"</strong></li>
+            <li>Enter your domain (e.g., <code>example.com</code>)</li>
+            <li>Click <strong>"Save"</strong></li>
+            <li>This will create a <code>CNAME</code> file in your repository</li>
+        </ol>
+
+        <h3>Configure DNS</h3>
+        <p>At your domain registrar, configure DNS records:</p>
+
+        <h4>For Root Domain (example.com)</h4>
+        <p>Add four A records pointing to GitHub's IP addresses:</p>
+
+        <pre><code>Type: A
+Name: @
+Value: 185.199.108.153
+
+Type: A
+Name: @
+Value: 185.199.109.153
+
+Type: A
+Name: @
+Value: 185.199.110.153
+
+Type: A
+Name: @
+Value: 185.199.111.153</code></pre>
+
+        <h4>For www Subdomain (www.example.com)</h4>
+        <p>Add a CNAME record:</p>
+
+        <pre><code>Type: CNAME
+Name: www
+Value: yourusername.github.io</code></pre>
+
+        <div class="note">
+            <strong>Important:</strong> Replace <code>yourusername</code> with your actual GitHub username.
+        </div>
+
+        <h2>Step 4: Enable HTTPS</h2>
+        <p>Once DNS is configured and propagated:</p>
+
+        <ol>
+            <li>Go back to <strong>"Settings"</strong> → <strong>"Pages"</strong></li>
+            <li>Wait for the DNS check to complete (can take up to 24 hours, usually much faster)</li>
+            <li>Once verified, check <strong>"Enforce HTTPS"</strong></li>
+        </ol>
+
+        <p>GitHub will automatically provision a free SSL certificate from Let's Encrypt!</p>
+
+        <h2>Alternative: Using CNAME File</h2>
+        <p>You can also create the CNAME file manually in your repository:</p>
+
+        <pre><code># Create CNAME file in your repository root
+echo "example.com" > CNAME
+
+# Commit and push
+git add CNAME
+git commit -m "Add custom domain"
+git push</code></pre>
+
+        <h2>Automatic Deployments</h2>
+        <p>GitHub Pages automatically rebuilds and deploys when you push to your configured branch:</p>
+
+        <pre><code># Make changes to your launchpage
+# ... edit files ...
+
+# Commit and push
+git add .
+git commit -m "Update launchpage"
+git push
+
+# GitHub Pages will automatically redeploy!</code></pre>
+
+        <h3>Check Deployment Status</h3>
+        <ul>
+            <li>Go to <strong>"Actions"</strong> tab in your repository</li>
+            <li>View the <code>pages-build-deployment</code> workflow</li>
+            <li>See build logs and deployment status</li>
+        </ul>
+
+        <h2>Multiple Domains (Limitation)</h2>
+        <p>GitHub Pages has a limitation: you can only configure <strong>one custom domain</strong> per repository.</p>
+
+        <h3>Workaround for Multiple Domains</h3>
+        <p>If you need multiple domains pointing to the same launchpage:</p>
+
+        <ol>
+            <li><strong>Option A:</strong> Use domain forwarding at your registrar
+                <ul>
+                    <li>Set up one domain on GitHub Pages (e.g., <code>primary-domain.com</code>)</li>
+                    <li>Configure other domains to redirect to the primary domain</li>
+                </ul>
+            </li>
+            <li><strong>Option B:</strong> Use Cloudflare or another DNS provider
+                <ul>
+                    <li>Configure Cloudflare to proxy multiple domains to your GitHub Pages site</li>
+                    <li>Set up page rules for domain handling</li>
+                </ul>
+            </li>
+            <li><strong>Option C:</strong> Deploy to multiple platforms
+                <ul>
+                    <li>Use Netlify or Vercel for additional domains (they support multiple domains)</li>
+                    <li>All platforms can serve the same repository</li>
+                </ul>
+            </li>
+        </ol>
+
+        <h2>Custom 404 Page (Optional)</h2>
+        <p>Create a custom 404 page by adding <code>404.html</code> to your repository root:</p>
+
+        <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Page Not Found&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;404 - Page Not Found&lt;/h1&gt;
+    &lt;p&gt;&lt;a href="/"&gt;Go to homepage&lt;/a&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+        <h2>Troubleshooting</h2>
+
+        <h3>Site not loading?</h3>
+        <ul>
+            <li>Check that GitHub Pages is enabled in Settings → Pages</li>
+            <li>Verify the correct branch and folder are selected</li>
+            <li>Look at the Actions tab for deployment errors</li>
+            <li>Wait a few minutes for the initial deployment to complete</li>
+        </ul>
+
+        <h3>Custom domain not working?</h3>
+        <ul>
+            <li>Verify DNS records are correctly configured</li>
+            <li>Use <code>dig example.com</code> to check DNS resolution</li>
+            <li>Wait up to 24-48 hours for DNS propagation</li>
+            <li>Ensure CNAME file exists in your repository</li>
+            <li>Check GitHub's domain verification status in Settings → Pages</li>
+        </ul>
+
+        <h3>HTTPS not available?</h3>
+        <ul>
+            <li>Ensure DNS is properly configured and propagated</li>
+            <li>Wait for GitHub to verify your domain (can take up to 24 hours)</li>
+            <li>Try unchecking and re-checking "Enforce HTTPS"</li>
+            <li>Verify your domain isn't using CAA records that block Let's Encrypt</li>
+        </ul>
+
+        <h3>Changes not appearing?</h3>
+        <ul>
+            <li>Check that your changes are pushed to the correct branch</li>
+            <li>View deployment status in the Actions tab</li>
+            <li>Clear your browser cache (GitHub Pages may cache aggressively)</li>
+            <li>Wait a few minutes for GitHub to rebuild and deploy</li>
+        </ul>
+
+        <h2>GitHub Pages Limitations</h2>
+        <p>Be aware of these GitHub Pages constraints:</p>
+
+        <ul>
+            <li><strong>Soft bandwidth limit:</strong> 100 GB/month</li>
+            <li><strong>Soft build limit:</strong> 10 builds per hour</li>
+            <li><strong>Repository size:</strong> Recommended under 1 GB</li>
+            <li><strong>File size:</strong> Individual files should be under 100 MB</li>
+            <li><strong>One custom domain:</strong> Only one custom domain per repository</li>
+        </ul>
+
+        <p>For most launchpage use cases, these limits are more than sufficient!</p>
+
+        <div class="platform-nav">
+            <h3>Other Deployment Platforms</h3>
+            <ul class="platform-links">
+                <li><a href="deploy-netlify.html">Netlify</a></li>
+                <li><a href="deploy-vercel.html">Vercel</a></li>
+                <li><a href="deploy-cloudflare-pages.html">Cloudflare Pages</a></li>
+                <li><a href="deploy-hetzner.html">Hetzner VPS</a></li>
+            </ul>
+        </div>
+
+        <hr style="margin: 3rem 0; border: none; border-top: 1px solid rgba(44, 95, 124, 0.1);">
+
+        <p><strong>Need help?</strong> <a href="https://github.com/simplebytes-com/launchpage.xyz/issues" target="_blank">Open an issue on GitHub</a> or check the <a href="https://docs.github.com/pages" target="_blank">GitHub Pages documentation</a>.</p>
+
+        <p style="margin-top: 2rem;">
+            <a href="docs.html" class="back-link">← Back to Documentation</a>
+        </p>
+    </div>
+
+    <!-- Analytics -->
+    <script defer data-domain="launchpage.xyz" src="https://analytics.simplebytes.com/js/script.pageview-props.tagged-events.js"></script>
+</body>
+</html>

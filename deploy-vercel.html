@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete guide to deploy Launchpage.xyz to Vercel. Learn how to use Vercel's UI or CLI for instant deployment with automatic SSL and edge network optimization.">
+    <meta name="keywords" content="Vercel deployment, launchpage, static site hosting, Vercel CLI, custom domain, edge network">
+    <title>Deploy to Vercel - Launchpage.xyz</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Deploy to Vercel - Launchpage.xyz">
+    <meta property="og:description" content="Deploy Launchpage.xyz on Vercel's edge network with automatic SSL and instant global deployment.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://launchpage.xyz/deploy-vercel.html">
+    <meta property="og:image" content="https://launchpage.xyz/img/og-image.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Deploy to Vercel - Launchpage.xyz">
+    <meta name="twitter:description" content="Deploy Launchpage.xyz on Vercel's edge network with automatic SSL and instant global deployment.">
+    <meta name="twitter:image" content="https://launchpage.xyz/img/og-image.png">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" href="/img/favicons/favicon.ico">
+    <meta name="theme-color" content="#2C5F7C">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "Deploy to Vercel - Launchpage.xyz",
+        "description": "Complete guide to deploy Launchpage.xyz to Vercel with automatic SSL and edge network optimization.",
+        "author": {
+            "@type": "Organization",
+            "name": "Launchpage.xyz"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Launchpage.xyz"
+        },
+        "datePublished": "2024-01-01",
+        "dateModified": "2024-01-01"
+    }
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Lexend:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-ocean: #2C5F7C;
+            --color-teal: #4A9BAE;
+            --color-dark: #1A2F42;
+            --color-gray-900: #0F1419;
+            --color-gray-800: #1C2430;
+            --color-gray-100: #F8FAFC;
+            --color-white: #FFFFFF;
+
+            --font-display: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            color: var(--color-dark);
+            background: var(--color-white);
+        }
+
+        .header {
+            background: var(--color-white);
+            border-bottom: 1px solid rgba(44, 95, 124, 0.1);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--color-ocean);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav a {
+            color: var(--color-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: var(--color-ocean);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--color-ocean);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+            color: var(--color-dark);
+            font-weight: 800;
+        }
+
+        .intro {
+            font-size: 1.25rem;
+            color: rgba(26, 47, 66, 0.7);
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin: 3rem 0 1rem;
+            color: var(--color-dark);
+            font-weight: 700;
+        }
+
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--color-ocean);
+            font-weight: 700;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        code {
+            font-family: var(--font-mono);
+            background: var(--color-gray-100);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.9em;
+            color: var(--color-ocean);
+        }
+
+        pre {
+            background: var(--color-gray-900);
+            color: #E6EDF3;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .note {
+            background: rgba(74, 155, 174, 0.1);
+            border-left: 4px solid var(--color-teal);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.25rem;
+        }
+
+        .note strong {
+            color: var(--color-ocean);
+        }
+
+        .platform-nav {
+            background: var(--color-gray-100);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            margin: 3rem 0;
+        }
+
+        .platform-nav h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .platform-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            list-style: none;
+            margin: 0;
+        }
+
+        .platform-links li {
+            margin: 0;
+        }
+
+        .platform-links a {
+            display: block;
+            padding: 1rem;
+            background: var(--color-white);
+            border-radius: 0.5rem;
+            color: var(--color-ocean);
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .platform-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                gap: 1rem;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">launchpage.xyz</a>
+            <nav class="nav">
+                <a href="/">Home</a>
+                <a href="example.html">Example</a>
+                <a href="docs.html">Documentation</a>
+                <a href="https://github.com/simplebytes-com/launchpage.xyz" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <a href="docs.html" class="back-link">← Back to Documentation</a>
+
+        <h1>Deploy to Vercel</h1>
+        <p class="intro">Vercel offers blazing-fast deployment with automatic SSL, edge network optimization, and seamless Git integration. Deploy your launchpage globally in seconds.</p>
+
+        <h2>Why Vercel?</h2>
+        <ul>
+            <li><strong>Lightning fast</strong> - Edge network with global CDN</li>
+            <li><strong>Zero config</strong> - Auto-detects static sites</li>
+            <li><strong>Instant deployment</strong> - Deploy in seconds, not minutes</li>
+            <li><strong>Automatic SSL</strong> - Free HTTPS for all domains</li>
+            <li><strong>Git integration</strong> - Deploy on every push</li>
+            <li><strong>Preview deployments</strong> - Unique URL for every Git branch</li>
+        </ul>
+
+        <h2>Prerequisites</h2>
+        <ul>
+            <li>A Vercel account (free tier available at <a href="https://vercel.com" target="_blank">vercel.com</a>)</li>
+            <li>Your Launchpage.xyz repository on GitHub, GitLab, or Bitbucket</li>
+            <li>A registered domain name</li>
+        </ul>
+
+        <h2>Method 1: Deploy via Vercel UI</h2>
+        <p>The quickest way to get started with Vercel:</p>
+
+        <ol>
+            <li>Go to <a href="https://vercel.com" target="_blank">vercel.com</a> and sign up or log in</li>
+            <li>Click <strong>"Add New"</strong> → <strong>"Project"</strong></li>
+            <li>Import your Git repository:
+                <ul>
+                    <li>Connect your GitHub, GitLab, or Bitbucket account</li>
+                    <li>Select the <code>launchpage.xyz</code> repository</li>
+                </ul>
+            </li>
+            <li>Vercel will automatically detect it as a static site:
+                <ul>
+                    <li><strong>Framework Preset:</strong> Other (auto-detected)</li>
+                    <li><strong>Build Command:</strong> (none needed)</li>
+                    <li><strong>Output Directory:</strong> <code>.</code> (root)</li>
+                </ul>
+            </li>
+            <li>Click <strong>"Deploy"</strong></li>
+        </ol>
+
+        <p>Your site will be live at a Vercel subdomain (e.g., <code>launchpage-xyz.vercel.app</code>) in seconds!</p>
+
+        <h2>Method 2: Deploy via Vercel CLI</h2>
+        <p>For developers who prefer the command line:</p>
+
+        <pre><code># Install Vercel CLI globally
+npm install -g vercel
+
+# Navigate to your project directory
+cd launchpage.xyz
+
+# Deploy to production
+vercel --prod</code></pre>
+
+        <p>The CLI will guide you through linking or creating a new project. Your site will be deployed instantly!</p>
+
+        <div class="note">
+            <strong>First-time CLI users:</strong> The first <code>vercel</code> command will prompt you to log in and configure your project. Subsequent deployments are instant.
+        </div>
+
+        <h2>Add Your Custom Domain</h2>
+        <p>Connect your custom domain to your Vercel deployment:</p>
+
+        <ol>
+            <li>In your Vercel dashboard, select your project</li>
+            <li>Go to <strong>"Settings"</strong> → <strong>"Domains"</strong></li>
+            <li>Click <strong>"Add"</strong> and enter your domain (e.g., <code>example.com</code>)</li>
+            <li>Configure DNS at your domain registrar:
+                <ul>
+                    <li><strong>Option A (Recommended):</strong> Add a CNAME record pointing to <code>cname.vercel-dns.com</code></li>
+                    <li><strong>Option B:</strong> Add an A record to Vercel's IP address (shown in dashboard)</li>
+                </ul>
+            </li>
+            <li>For the www subdomain, add another CNAME: <code>www</code> → <code>cname.vercel-dns.com</code></li>
+            <li>SSL is automatically provisioned (usually within minutes)</li>
+        </ol>
+
+        <h3>Example DNS Configuration</h3>
+        <pre><code># At your domain registrar's DNS settings:
+
+# Root domain
+Type: A
+Name: @
+Value: 76.76.21.21
+
+# www subdomain
+Type: CNAME
+Name: www
+Value: cname.vercel-dns.com</code></pre>
+
+        <h2>Adding Multiple Domains</h2>
+        <p>Want to serve the same launchpage on multiple domains?</p>
+
+        <ol>
+            <li>Go to <strong>"Settings"</strong> → <strong>"Domains"</strong></li>
+            <li>Click <strong>"Add"</strong> and enter your second domain</li>
+            <li>Configure DNS for this domain the same way</li>
+            <li>Repeat for as many domains as you need</li>
+        </ol>
+
+        <p>Each domain will automatically get SSL, and the page will detect and display the correct domain name!</p>
+
+        <h2>Automatic Deployments</h2>
+        <p>Vercel automatically deploys your site on every Git push:</p>
+
+        <ul>
+            <li><strong>Production deployments:</strong> Every push to your main branch</li>
+            <li><strong>Preview deployments:</strong> Every push to other branches gets a unique URL</li>
+            <li><strong>Deployment history:</strong> View and rollback to any previous deployment</li>
+            <li><strong>Instant rollbacks:</strong> Revert to a previous version in one click</li>
+        </ul>
+
+        <h3>Configure Production Branch</h3>
+        <p>To change which branch triggers production deployments:</p>
+
+        <ol>
+            <li>Go to <strong>"Settings"</strong> → <strong>"Git"</strong></li>
+            <li>Under "Production Branch", select your preferred branch</li>
+            <li>All other branches will create preview deployments</li>
+        </ol>
+
+        <h2>Environment Variables (Optional)</h2>
+        <p>If you need environment-specific configuration:</p>
+
+        <ol>
+            <li>Go to <strong>"Settings"</strong> → <strong>"Environment Variables"</strong></li>
+            <li>Add variables for Production, Preview, or Development</li>
+            <li>Redeploy for changes to take effect</li>
+        </ol>
+
+        <h2>Performance Features</h2>
+        <p>Vercel automatically optimizes your launchpage:</p>
+
+        <ul>
+            <li><strong>Edge Network:</strong> Content served from 70+ global locations</li>
+            <li><strong>Smart CDN:</strong> Automatic asset optimization and caching</li>
+            <li><strong>Brotli compression:</strong> Smaller file sizes for faster loading</li>
+            <li><strong>HTTP/2:</strong> Multiplexed connections for better performance</li>
+        </ul>
+
+        <h2>Analytics (Optional)</h2>
+        <p>Enable Vercel Analytics to track page views and performance:</p>
+
+        <ol>
+            <li>Go to the <strong>"Analytics"</strong> tab in your project</li>
+            <li>Click <strong>"Enable"</strong></li>
+            <li>Add the analytics script to your HTML (Vercel provides the code)</li>
+        </ol>
+
+        <div class="note">
+            <strong>Note:</strong> Vercel Analytics is a paid feature on the free tier, but the basic Web Vitals dashboard is available for free.
+        </div>
+
+        <h2>Troubleshooting</h2>
+
+        <h3>Domain not connecting?</h3>
+        <ul>
+            <li>Verify DNS records are correctly configured</li>
+            <li>Check DNS propagation using tools like <code>whatsmydns.net</code></li>
+            <li>Ensure there are no conflicting DNS records (remove old A/CNAME records)</li>
+            <li>Wait up to 48 hours for full DNS propagation (usually much faster)</li>
+        </ul>
+
+        <h3>SSL certificate not provisioning?</h3>
+        <ul>
+            <li>Ensure DNS is properly configured and propagated</li>
+            <li>Check that your domain isn't proxied through Cloudflare (or use Cloudflare DNS-only mode)</li>
+            <li>Try removing and re-adding the domain</li>
+        </ul>
+
+        <h3>Deployment failing?</h3>
+        <ul>
+            <li>Check the deployment logs in your Vercel dashboard</li>
+            <li>Ensure your repository is accessible to Vercel</li>
+            <li>Verify there are no build errors (though launchpage.xyz requires no build)</li>
+        </ul>
+
+        <h3>Site not updating?</h3>
+        <ul>
+            <li>Check the "Deployments" tab to see if new deployments are being triggered</li>
+            <li>Verify the Git integration is still connected</li>
+            <li>Try a manual deployment via the Vercel dashboard or CLI</li>
+        </ul>
+
+        <h2>CLI Tips</h2>
+        <p>Useful Vercel CLI commands:</p>
+
+        <pre><code># Deploy to preview (not production)
+vercel
+
+# Deploy to production
+vercel --prod
+
+# List all deployments
+vercel ls
+
+# View deployment logs
+vercel logs [deployment-url]
+
+# Remove a deployment
+vercel rm [deployment-url]
+
+# Link local directory to Vercel project
+vercel link</code></pre>
+
+        <div class="platform-nav">
+            <h3>Other Deployment Platforms</h3>
+            <ul class="platform-links">
+                <li><a href="deploy-netlify.html">Netlify</a></li>
+                <li><a href="deploy-github-pages.html">GitHub Pages</a></li>
+                <li><a href="deploy-cloudflare-pages.html">Cloudflare Pages</a></li>
+                <li><a href="deploy-hetzner.html">Hetzner VPS</a></li>
+            </ul>
+        </div>
+
+        <hr style="margin: 3rem 0; border: none; border-top: 1px solid rgba(44, 95, 124, 0.1);">
+
+        <p><strong>Need help?</strong> <a href="https://github.com/simplebytes-com/launchpage.xyz/issues" target="_blank">Open an issue on GitHub</a> or check the <a href="https://vercel.com/docs" target="_blank">Vercel documentation</a>.</p>
+
+        <p style="margin-top: 2rem;">
+            <a href="docs.html" class="back-link">← Back to Documentation</a>
+        </p>
+    </div>
+
+    <!-- Analytics -->
+    <script defer data-domain="launchpage.xyz" src="https://analytics.simplebytes.com/js/script.pageview-props.tagged-events.js"></script>
+</body>
+</html>
