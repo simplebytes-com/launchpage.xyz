@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Deployment documentation for Launchpage.xyz - Learn how to deploy to Netlify, Vercel, GitHub Pages, Cloudflare Pages, Hetzner, and other platforms.">
+    <title>Documentation - Launchpage.xyz</title>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" href="/img/favicons/favicon.ico">
+    <meta name="theme-color" content="#2C5F7C">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Lexend:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-ocean: #2C5F7C;
+            --color-teal: #4A9BAE;
+            --color-dark: #1A2F42;
+            --color-gray-900: #0F1419;
+            --color-gray-800: #1C2430;
+            --color-gray-100: #F8FAFC;
+            --color-white: #FFFFFF;
+
+            --font-display: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            color: var(--color-dark);
+            background: var(--color-white);
+        }
+
+        .header {
+            background: var(--color-white);
+            border-bottom: 1px solid rgba(44, 95, 124, 0.1);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--color-ocean);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav a {
+            color: var(--color-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: var(--color-ocean);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+            color: var(--color-dark);
+            font-weight: 800;
+        }
+
+        .intro {
+            font-size: 1.25rem;
+            color: rgba(26, 47, 66, 0.7);
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin: 3rem 0 1rem;
+            color: var(--color-dark);
+            font-weight: 700;
+        }
+
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--color-ocean);
+            font-weight: 700;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        code {
+            font-family: var(--font-mono);
+            background: var(--color-gray-100);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.9em;
+            color: var(--color-ocean);
+        }
+
+        pre {
+            background: var(--color-gray-900);
+            color: #E6EDF3;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .note {
+            background: rgba(74, 155, 174, 0.1);
+            border-left: 4px solid var(--color-teal);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.25rem;
+        }
+
+        .note strong {
+            color: var(--color-ocean);
+        }
+
+        .toc {
+            background: var(--color-gray-100);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .toc h2 {
+            font-size: 1.25rem;
+            margin: 0 0 1rem;
+        }
+
+        .toc ul {
+            list-style: none;
+            margin: 0;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: var(--color-ocean);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                gap: 1rem;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">launchpage.xyz</a>
+            <nav class="nav">
+                <a href="/">Home</a>
+                <a href="example.html">Example</a>
+                <a href="https://github.com/simplebytes-com/launchpage.xyz" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Documentation</h1>
+        <p class="intro">Learn how to deploy Launchpage.xyz to your favorite platform and give your domains a professional presence.</p>
+
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><a href="#quickstart">Quick Start</a></li>
+                <li><a href="#netlify">Netlify Deployment</a></li>
+                <li><a href="#vercel">Vercel Deployment</a></li>
+                <li><a href="#github-pages">GitHub Pages Deployment</a></li>
+                <li><a href="#cloudflare-pages">Cloudflare Pages Deployment</a></li>
+                <li><a href="#hetzner">Hetzner VPS Deployment with Nginx</a></li>
+                <li><a href="#customization">Customization</a></li>
+            </ul>
+        </div>
+
+        <h2 id="quickstart">Quick Start</h2>
+        <p>Launchpage.xyz is a simple, static HTML site that requires no backend or database. You can deploy it to any static hosting platform in minutes.</p>
+
+        <h3>Basic Requirements</h3>
+        <ul>
+            <li>A registered domain name</li>
+            <li>Access to DNS settings for your domain</li>
+            <li>A hosting platform account (Netlify, Vercel, etc.)</li>
+        </ul>
+
+        <h3>Repository Setup</h3>
+        <p>First, fork or clone the repository:</p>
+        <pre><code>git clone https://github.com/simplebytes-com/launchpage.xyz.git
+cd launchpage.xyz</code></pre>
+
+        <h2 id="netlify">Netlify Deployment</h2>
+        <p>Netlify is one of the easiest platforms to deploy static sites.</p>
+
+        <h3>Method 1: Deploy via Netlify UI</h3>
+        <ol>
+            <li>Go to <a href="https://netlify.com" target="_blank">netlify.com</a> and sign up/login</li>
+            <li>Click "Add new site" → "Import an existing project"</li>
+            <li>Connect to your Git provider (GitHub, GitLab, etc.)</li>
+            <li>Select the <code>launchpage.xyz</code> repository</li>
+            <li>Build settings:
+                <ul>
+                    <li><strong>Build command:</strong> (leave empty)</li>
+                    <li><strong>Publish directory:</strong> <code>.</code> (root)</li>
+                </ul>
+            </li>
+            <li>Click "Deploy site"</li>
+        </ol>
+
+        <h3>Method 2: Deploy via Netlify CLI</h3>
+        <pre><code># Install Netlify CLI
+npm install -g netlify-cli
+
+# Login to Netlify
+netlify login
+
+# Deploy
+netlify deploy --prod</code></pre>
+
+        <h3>Add Your Custom Domain</h3>
+        <ol>
+            <li>In Netlify dashboard, go to "Site settings" → "Domain management"</li>
+            <li>Click "Add custom domain"</li>
+            <li>Enter your domain (e.g., <code>example.com</code>)</li>
+            <li>Follow the DNS configuration instructions:
+                <ul>
+                    <li>Add an A record pointing to Netlify's load balancer (IP shown in dashboard)</li>
+                    <li>Or add a CNAME record: <code>your-site.netlify.app</code></li>
+                </ul>
+            </li>
+            <li>Enable HTTPS (automatic with Netlify)</li>
+        </ol>
+
+        <div class="note">
+            <strong>Note:</strong> For multiple domains, you can add each one as a custom domain in Netlify. They'll all serve the same launchpage!
+        </div>
+
+        <h2 id="vercel">Vercel Deployment</h2>
+        <p>Vercel offers similar simplicity to Netlify.</p>
+
+        <h3>Method 1: Deploy via Vercel UI</h3>
+        <ol>
+            <li>Go to <a href="https://vercel.com" target="_blank">vercel.com</a> and sign up/login</li>
+            <li>Click "Add New" → "Project"</li>
+            <li>Import your Git repository</li>
+            <li>Vercel will auto-detect it as a static site</li>
+            <li>Click "Deploy"</li>
+        </ol>
+
+        <h3>Method 2: Deploy via Vercel CLI</h3>
+        <pre><code># Install Vercel CLI
+npm install -g vercel
+
+# Deploy
+vercel --prod</code></pre>
+
+        <h3>Add Your Custom Domain</h3>
+        <ol>
+            <li>Go to project "Settings" → "Domains"</li>
+            <li>Add your domain</li>
+            <li>Configure DNS:
+                <ul>
+                    <li>Add a CNAME record pointing to <code>cname.vercel-dns.com</code></li>
+                    <li>Or add an A record to Vercel's IP (shown in dashboard)</li>
+                </ul>
+            </li>
+            <li>SSL is automatic</li>
+        </ol>
+
+        <h2 id="github-pages">GitHub Pages Deployment</h2>
+        <p>Host directly from your GitHub repository for free.</p>
+
+        <h3>Setup Steps</h3>
+        <ol>
+            <li>Push your code to a GitHub repository</li>
+            <li>Go to repository "Settings" → "Pages"</li>
+            <li>Under "Source", select:
+                <ul>
+                    <li><strong>Branch:</strong> <code>main</code> (or your branch name)</li>
+                    <li><strong>Folder:</strong> <code>/ (root)</code></li>
+                </ul>
+            </li>
+            <li>Click "Save"</li>
+            <li>Your site will be live at <code>https://yourusername.github.io/launchpage.xyz</code></li>
+        </ol>
+
+        <h3>Custom Domain Setup</h3>
+        <ol>
+            <li>In GitHub Pages settings, add your custom domain</li>
+            <li>Create a file named <code>CNAME</code> in your repository root with your domain:
+                <pre><code>example.com</code></pre>
+            </li>
+            <li>Configure DNS at your domain registrar:
+                <ul>
+                    <li><strong>For root domain (example.com):</strong><br>
+                        Add A records pointing to GitHub's IPs:
+                        <pre><code>185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153</code></pre>
+                    </li>
+                    <li><strong>For www subdomain:</strong><br>
+                        Add CNAME: <code>yourusername.github.io</code>
+                    </li>
+                </ul>
+            </li>
+            <li>Enable "Enforce HTTPS" in GitHub Pages settings</li>
+        </ol>
+
+        <h2 id="cloudflare-pages">Cloudflare Pages Deployment</h2>
+        <p>Deploy with Cloudflare's global CDN and DNS management.</p>
+
+        <h3>Deployment Steps</h3>
+        <ol>
+            <li>Go to <a href="https://pages.cloudflare.com" target="_blank">Cloudflare Pages</a></li>
+            <li>Click "Create a project"</li>
+            <li>Connect your Git provider</li>
+            <li>Select the repository</li>
+            <li>Build settings:
+                <ul>
+                    <li><strong>Framework preset:</strong> None</li>
+                    <li><strong>Build command:</strong> (leave empty)</li>
+                    <li><strong>Build output directory:</strong> <code>.</code></li>
+                </ul>
+            </li>
+            <li>Click "Save and Deploy"</li>
+        </ol>
+
+        <h3>Custom Domain</h3>
+        <ol>
+            <li>Go to project → "Custom domains"</li>
+            <li>Add your domain</li>
+            <li>If domain is on Cloudflare, DNS is configured automatically</li>
+            <li>If not, add CNAME record to your Cloudflare Pages URL</li>
+        </ol>
+
+        <h2 id="hetzner">Hetzner VPS Deployment with Nginx</h2>
+        <p>For those who prefer full control, deploy on a VPS with Nginx to serve any incoming domain.</p>
+
+        <h3>Prerequisites</h3>
+        <ul>
+            <li>A Hetzner VPS (or any Ubuntu/Debian server)</li>
+            <li>Root or sudo access</li>
+            <li>Basic command line knowledge</li>
+        </ul>
+
+        <h3>Step 1: Set Up the Server</h3>
+        <pre><code># SSH into your server
+ssh root@your-server-ip
+
+# Update system
+apt update && apt upgrade -y
+
+# Install Nginx and Git
+apt install nginx git -y
+
+# Install Certbot for SSL
+apt install certbot python3-certbot-nginx -y</code></pre>
+
+        <h3>Step 2: Clone the Repository</h3>
+        <pre><code># Create web directory
+mkdir -p /var/www/launchpage
+
+# Clone repository
+cd /var/www/launchpage
+git clone https://github.com/simplebytes-com/launchpage.xyz.git .
+
+# Set proper permissions
+chown -R www-data:www-data /var/www/launchpage
+chmod -R 755 /var/www/launchpage</code></pre>
+
+        <h3>Step 3: Configure Nginx (Catch-All for Any Domain)</h3>
+        <p>Create an Nginx configuration that serves launchpage for <strong>any</strong> domain pointing to your server:</p>
+
+        <pre><code># Create Nginx config
+nano /etc/nginx/sites-available/launchpage
+
+# Add this configuration:</code></pre>
+
+        <pre><code>server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    # Catch all server names
+    server_name _;
+
+    root /var/www/launchpage;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Serve static files
+    location ~* \.(jpg|jpeg|png|gif|ico|css|js|svg)$ {
+        expires 7d;
+        add_header Cache-Control "public, immutable";
+    }
+}</code></pre>
+
+        <h3>Step 4: Enable the Configuration</h3>
+        <pre><code># Remove default config
+rm /etc/nginx/sites-enabled/default
+
+# Enable our config
+ln -s /etc/nginx/sites-available/launchpage /etc/nginx/sites-enabled/
+
+# Test configuration
+nginx -t
+
+# Restart Nginx
+systemctl restart nginx
+systemctl enable nginx</code></pre>
+
+        <h3>Step 5: Point Your Domains</h3>
+        <p>For each domain you want to use:</p>
+        <ol>
+            <li>Add an A record pointing to your server's IP:
+                <ul>
+                    <li><strong>Type:</strong> A</li>
+                    <li><strong>Name:</strong> @ (root) or www</li>
+                    <li><strong>Value:</strong> Your server IP (e.g., 157.245.16.45)</li>
+                </ul>
+            </li>
+            <li>Wait for DNS propagation (usually 5-30 minutes)</li>
+        </ol>
+
+        <h3>Step 6: Add SSL Certificates (Optional but Recommended)</h3>
+        <p>Add SSL for specific domains:</p>
+
+        <pre><code># For a specific domain
+certbot --nginx -d example.com -d www.example.com
+
+# Or for wildcard (requires DNS validation)
+certbot certonly --manual --preferred-challenges=dns -d *.example.com -d example.com</code></pre>
+
+        <p>Update your Nginx config to include specific domains with SSL:</p>
+
+        <pre><code>server {
+    listen 80;
+    listen [::]:80;
+    server_name example.com www.example.com;
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name example.com www.example.com;
+
+    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
+
+    root /var/www/launchpage;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}</code></pre>
+
+        <h3>Updating Your Launchpage</h3>
+        <p>To update to the latest version:</p>
+
+        <pre><code>cd /var/www/launchpage
+git pull origin main
+systemctl reload nginx</code></pre>
+
+        <div class="note">
+            <strong>Pro Tip:</strong> The catch-all configuration means ANY domain pointing to your server will show the launchpage. Perfect for managing multiple domains!
+        </div>
+
+        <h2 id="customization">Customization</h2>
+        <p>Make the launchpage your own by editing the HTML file.</p>
+
+        <h3>Change Contact Form Endpoint</h3>
+        <p>Update the form action in <code>index.html</code>:</p>
+
+        <pre><code>&lt;form class="email-form" id="emailForm" method="POST"
+      action="https://contact.launchpage.xyz"&gt;</code></pre>
+
+        <h3>Update Analytics</h3>
+        <p>Replace the Plausible analytics domain:</p>
+
+        <pre><code>&lt;script defer data-domain="yourdomain.com"
+        src="https://analytics.simplebytes.com/js/script.pageview-props.tagged-events.js"&gt;
+&lt;/script&gt;</code></pre>
+
+        <h3>Customize Colors</h3>
+        <p>Edit CSS variables in the <code>&lt;style&gt;</code> section:</p>
+
+        <pre><code>:root {
+    --color-bg-start: #1A2F42;
+    --color-bg-end: #2C5F7C;
+    --color-accent: #4A9BAE;
+    /* ... */
+}</code></pre>
+
+        <h3>Multi-Domain Dynamic Content</h3>
+        <p>The page automatically detects the domain and displays it. You can customize this behavior in the JavaScript section:</p>
+
+        <pre><code>// Get current domain
+const currentDomain = window.location.hostname;
+
+// Update title dynamically
+if (domainElement && prettyDomain) {
+    domainElement.textContent = prettyDomain;
+}</code></pre>
+
+        <hr style="margin: 3rem 0; border: none; border-top: 1px solid rgba(44, 95, 124, 0.1);">
+
+        <p><strong>Need help?</strong> <a href="https://github.com/simplebytes-com/launchpage.xyz/issues" target="_blank">Open an issue on GitHub</a> or check out the <a href="https://github.com/simplebytes-com/launchpage.xyz" target="_blank">repository README</a>.</p>
+
+        <p style="margin-top: 2rem;">
+            <a href="/" style="color: var(--color-ocean); text-decoration: none; font-weight: 600;">← Back to Home</a>
+        </p>
+    </div>
+
+    <!-- Analytics -->
+    <script defer data-domain="launchpage.xyz" src="https://analytics.simplebytes.com/js/script.pageview-props.tagged-events.js"></script>
+</body>
+</html>

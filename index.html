@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta Information -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Launchpage.xyz - Free, open-source landing pages for newly registered domains. Avoid empty pages and default ads. Works with Netlify, Vercel, GitHub Pages, and more. Built by The Codeero Group and SimpleBytes.">
+    <meta name="keywords" content="landing page, domain parking, new domain, netlify, vercel, github pages, open source, free landing page">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Launchpage.xyz - Professional Landing Pages for New Domains">
+    <meta property="og:description" content="Free, open-source solution to give newly registered domains a professional presence. No ads, no spam, just clean landing pages.">
+    <meta property="og:url" content="https://launchpage.xyz">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Launchpage.xyz - Professional Landing Pages for New Domains">
+    <meta name="twitter:description" content="Free, open-source solution for newly registered domains. Works with Netlify, Vercel, GitHub Pages, and more.">
+
+    <!-- Page Title -->
+    <title>Launchpage.xyz - Free Open-Source Landing Pages for New Domains</title>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/img/favicons/site.webmanifest">
+    <link rel="shortcut icon" href="/img/favicons/favicon.ico">
+    <meta name="theme-color" content="#2C5F7C">
+
+    <!-- Fonts: Clean, readable typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Launchpage.xyz",
+      "applicationCategory": "WebApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Free, open-source landing pages for newly registered domains",
+      "operatingSystem": "Web",
+      "author": {
+        "@type": "Organization",
+        "name": "The Codeero Group"
+      }
+    }
+    </script>
+
+    <style>
+        /* Design System Variables */
+        :root {
+            --color-ocean: #2C5F7C;
+            --color-ocean-dark: #1A3A4D;
+            --color-teal: #4A9BAE;
+            --color-teal-light: #7EC8E3;
+            --color-coral: #FF8A5B;
+            --color-dark: #1A2F42;
+            --color-gray-900: #0F1419;
+            --color-gray-800: #1C2430;
+            --color-gray-100: #F8FAFC;
+            --color-white: #FFFFFF;
+
+            --font-display: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 1.5rem;
+            --spacing-lg: 2.5rem;
+            --spacing-xl: 4rem;
+            --spacing-2xl: 6rem;
+
+            --radius-sm: 0.5rem;
+            --radius-md: 1rem;
+            --radius-lg: 1.5rem;
+
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
+        }
+
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--color-dark);
+            background: var(--color-white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Header */
+        .header {
+            background: var(--color-white);
+            border-bottom: 1px solid rgba(44, 95, 124, 0.1);
+            padding: var(--spacing-md) 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--color-ocean);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav {
+            display: flex;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        .nav a {
+            color: var(--color-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav a:hover {
+            color: var(--color-ocean);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--color-ocean) 0%, var(--color-ocean-dark) 100%);
+            color: var(--color-white);
+            padding: var(--spacing-2xl) var(--spacing-md);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            padding: var(--spacing-xs) var(--spacing-md);
+            border-radius: var(--radius-sm);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            backdrop-filter: blur(10px);
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            line-height: 1.1;
+            margin-bottom: var(--spacing-md);
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: clamp(1.125rem, 2vw, 1.375rem);
+            opacity: 0.95;
+            margin-bottom: var(--spacing-xl);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Domain Lookup */
+        .domain-lookup {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xs);
+            display: flex;
+            gap: var(--spacing-xs);
+            max-width: 600px;
+            margin: 0 auto var(--spacing-lg);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .domain-input {
+            flex: 1;
+            border: none;
+            padding: var(--spacing-md) var(--spacing-lg);
+            font-size: 1.125rem;
+            font-family: var(--font-body);
+            color: var(--color-dark);
+            border-radius: var(--radius-md);
+            outline: none;
+        }
+
+        .domain-input::placeholder {
+            color: rgba(26, 47, 66, 0.5);
+        }
+
+        .lookup-btn {
+            background: var(--color-coral);
+            color: var(--color-white);
+            border: none;
+            padding: var(--spacing-md) var(--spacing-xl);
+            font-size: 1.125rem;
+            font-weight: 700;
+            font-family: var(--font-body);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .lookup-btn:hover {
+            background: #FF6B3D;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 138, 91, 0.4);
+        }
+
+        .lookup-btn:active {
+            transform: translateY(0);
+        }
+
+        .hero-note {
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+
+        /* Section Base */
+        .section {
+            padding: var(--spacing-2xl) var(--spacing-md);
+        }
+
+        .section-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .section-label {
+            color: var(--color-teal);
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--color-dark);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .section-description {
+            font-size: 1.25rem;
+            color: rgba(26, 47, 66, 0.7);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Problem/Solution */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+
+        .comparison-card {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            border: 2px solid;
+        }
+
+        .comparison-card.problem {
+            border-color: rgba(255, 107, 61, 0.2);
+            background: rgba(255, 107, 61, 0.02);
+        }
+
+        .comparison-card.solution {
+            border-color: rgba(74, 155, 174, 0.3);
+            background: rgba(74, 155, 174, 0.05);
+        }
+
+        .comparison-icon {
+            font-size: 3rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .comparison-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .comparison-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .comparison-card li {
+            padding: var(--spacing-sm) 0;
+            padding-left: var(--spacing-lg);
+            position: relative;
+        }
+
+        .comparison-card li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .problem li::before {
+            color: var(--color-coral);
+        }
+
+        .solution li::before {
+            color: var(--color-teal);
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-xl);
+        }
+
+        .feature-card {
+            background: var(--color-white);
+            border: 1px solid rgba(44, 95, 124, 0.1);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-teal);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--color-teal-light), var(--color-teal));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .feature-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-sm);
+            color: var(--color-dark);
+        }
+
+        .feature-card p {
+            color: rgba(26, 47, 66, 0.7);
+            line-height: 1.7;
+        }
+
+        /* Platforms */
+        .platforms {
+            background: var(--color-gray-100);
+        }
+
+        .platform-logos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+
+        .platform-logo {
+            background: var(--color-white);
+            padding: var(--spacing-lg) var(--spacing-xl);
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            color: var(--color-dark);
+            font-size: 1.25rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
+        }
+
+        .platform-logo:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Partners */
+        .partners {
+            text-align: center;
+        }
+
+        .partner-logos {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-xl);
+        }
+
+        .partner-link {
+            display: block;
+            padding: var(--spacing-lg);
+            text-decoration: none;
+            transition: transform 0.2s ease;
+        }
+
+        .partner-link:hover {
+            transform: scale(1.05);
+        }
+
+        .partner-name {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            color: var(--color-ocean);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .partner-tagline {
+            color: rgba(26, 47, 66, 0.6);
+            font-size: 0.875rem;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--color-dark) 0%, var(--color-gray-800) 100%);
+            color: var(--color-white);
+            text-align: center;
+            padding: var(--spacing-2xl) var(--spacing-md);
+        }
+
+        .cta h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .cta p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: var(--spacing-md) var(--spacing-xl);
+            font-size: 1.125rem;
+            font-weight: 700;
+            font-family: var(--font-body);
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--color-coral);
+            color: var(--color-white);
+        }
+
+        .btn-primary:hover {
+            background: #FF6B3D;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 138, 91, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--color-white);
+            border: 2px solid var(--color-white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-white);
+            color: var(--color-dark);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--color-gray-900);
+            color: var(--color-white);
+            padding: var(--spacing-xl) var(--spacing-md);
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer p {
+            opacity: 0.7;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .footer a {
+            color: var(--color-teal-light);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .domain-lookup {
+                flex-direction: column;
+            }
+
+            .nav {
+                gap: var(--spacing-md);
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">launchpage.xyz</a>
+            <nav class="nav">
+                <a href="#why">Why</a>
+                <a href="#features">Features</a>
+                <a href="example.html">See Example</a>
+                <a href="#lookup">Check Launchpage Sites</a>
+                <a href="docs.html">Docs</a>
+                <a href="https://github.com/simplebytes-com/launchpage.xyz" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">🚀 Free & Open Source</div>
+            <h1>Professional Landing Pages for Newly Registered Domains</h1>
+            <p>Stop showing empty pages or default ads. Give your domains a clean, professional presence while you build.</p>
+
+            <div class="cta-buttons" style="margin-top: 2rem;">
+                <a href="example.html" class="btn btn-primary">See Live Example</a>
+                <a href="https://github.com/simplebytes-com/launchpage.xyz" target="_blank" class="btn btn-secondary">View on GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshot Section -->
+    <section class="section" style="background: var(--color-gray-100); padding: 3rem 1.5rem;">
+        <div class="section-content">
+            <div class="section-header">
+                <h2 class="section-title" style="margin-bottom: 2rem;">See It In Action</h2>
+            </div>
+            <div style="max-width: 900px; margin: 0 auto; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg);">
+                <img src="img/screenshot.jpg" alt="Launchpage.xyz example" style="width: 100%; height: auto; display: block;">
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Section -->
+    <section class="section" id="why">
+        <div class="section-content">
+            <div class="section-header">
+                <div class="section-label">The Problem We Solve</div>
+                <h2 class="section-title">Why Launchpage.xyz Exists</h2>
+                <p class="section-description">Newly registered domains often show empty pages or get flagged as spam by social platforms. We created a better solution.</p>
+            </div>
+
+            <div class="comparison">
+                <div class="comparison-card problem">
+                    <div class="comparison-icon">❌</div>
+                    <h3>Before Launchpage</h3>
+                    <ul>
+                        <li>Empty or "404" pages look unprofessional</li>
+                        <li>Default registrar ads spam your domain</li>
+                        <li>Social platforms flag empty sites</li>
+                        <li>No way to capture early interest</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-card solution">
+                    <div class="comparison-icon">✅</div>
+                    <h3>With Launchpage</h3>
+                    <ul>
+                        <li>Clean, professional "coming soon" page</li>
+                        <li>No ads, no spam - completely free</li>
+                        <li>Email capture for early notifications</li>
+                        <li>Works with any hosting platform</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="section-content">
+            <div class="section-header">
+                <div class="section-label">Features</div>
+                <h2 class="section-title">Everything You Need</h2>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Beautiful Design</h3>
+                    <p>Modern, responsive design that looks great on all devices. Light/dark mode support built-in.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📧</div>
+                    <h3>Email Capture</h3>
+                    <p>Collect emails from interested visitors. Honeypot protection keeps out spam bots.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔓</div>
+                    <h3>Open Source</h3>
+                    <p>Completely free and open source. Use it, modify it, make it yours. No strings attached.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Easy Setup</h3>
+                    <p>Deploy in minutes to Netlify, Vercel, GitHub Pages, or any static host. No backend required.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Privacy-First Analytics</h3>
+                    <p>Built-in Plausible Analytics support. Track visitors without invading their privacy.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Multi-Domain</h3>
+                    <p>One codebase serves unlimited domains. Perfect for managing multiple projects.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platforms Section -->
+    <section class="section platforms" id="platforms">
+        <div class="section-content">
+            <div class="section-header">
+                <div class="section-label">Deployment</div>
+                <h2 class="section-title">Works Everywhere</h2>
+                <p class="section-description">Deploy to your favorite platform in minutes. No backend, no database, no complexity.</p>
+            </div>
+
+            <div class="platform-logos">
+                <a href="https://netlify.com" target="_blank" class="platform-logo" style="text-decoration: none; color: inherit;">Netlify</a>
+                <a href="https://vercel.com" target="_blank" class="platform-logo" style="text-decoration: none; color: inherit;">Vercel</a>
+                <a href="https://pages.github.com" target="_blank" class="platform-logo" style="text-decoration: none; color: inherit;">GitHub Pages</a>
+                <a href="https://docs.gitlab.com/ee/user/project/pages/" target="_blank" class="platform-logo" style="text-decoration: none; color: inherit;">GitLab Pages</a>
+                <a href="https://pages.cloudflare.com" target="_blank" class="platform-logo" style="text-decoration: none; color: inherit;">Cloudflare Pages</a>
+                <a href="https://www.hetzner.com" target="_blank" class="platform-logo" style="text-decoration: none; color: inherit;">Hetzner</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="section partners">
+        <div class="section-content">
+            <div class="section-header">
+                <div class="section-label">Built By</div>
+                <h2 class="section-title">Our Team</h2>
+            </div>
+
+            <div class="partner-logos">
+                <a href="https://www.codeero.com?ref=launchpage&utm_source=launchpage.xyz" class="partner-link" target="_blank">
+                    <div class="partner-name">The Codeero Group</div>
+                    <div class="partner-tagline">Web Development & Design</div>
+                </a>
+
+                <a href="https://simplebytes.com?ref=launchpage&utm_source=launchpage.xyz" class="partner-link" target="_blank">
+                    <div class="partner-name">SimpleBytes</div>
+                    <div class="partner-tagline">Digital Solutions</div>
+                </a>
+            </div>
+
+            <p style="margin-top: 2rem; color: rgba(26, 47, 66, 0.6);">
+                Learn more about domain management at
+                <a href="https://domaindetails.com?utm_source=launchpage.xyz" target="_blank" style="color: var(--color-teal); font-weight: 600;">DomainDetails.com</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- Domain Lookup Section -->
+    <section class="section" id="lookup" style="background: var(--color-gray-100);">
+        <div class="section-content">
+            <div class="section-header">
+                <div class="section-label">Domain Tools</div>
+                <h2 class="section-title">Check the Details of Any Launchpage Powered Site</h2>
+                <p class="section-description">
+                    Use <a href="https://domaindetails.com?utm_source=launchpage.xyz" target="_blank" style="color: var(--color-teal); font-weight: 600; text-decoration: none;">DomainDetails.com</a> to get comprehensive information about any domain including registration details, DNS records, and more.
+                </p>
+            </div>
+
+            <!-- Domain Lookup -->
+            <form class="domain-lookup" id="lookupForm" action="https://domaindetails.com/results" method="GET" style="max-width: 600px; margin: 2rem auto 0;">
+                <input
+                    type="text"
+                    name="domain"
+                    class="domain-input"
+                    placeholder="Enter a domain (e.g., example.com)"
+                    required
+                    pattern="[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                    id="domainInput"
+                >
+                <input type="hidden" name="utm_source" value="launchpage.xyz">
+                <button type="submit" class="lookup-btn">Lookup</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="section-content">
+            <h2>Ready to Get Started?</h2>
+            <p>Deploy Launchpage.xyz to your domain in minutes. It's free, it's open source, and it just works.</p>
+
+            <div class="cta-buttons">
+                <a href="https://github.com/simplebytes-com/launchpage.xyz" target="_blank" class="btn btn-primary">View on GitHub</a>
+                <a href="docs.html" class="btn btn-secondary">Read Documentation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2020-2025 <a href="https://simplebytes.com?ref=launchpage&utm_source=launchpage.xyz" target="_blank">Simple Bytes</a> & <a href="https://www.codeero.com?ref=launchpage&utm_source=launchpage.xyz" target="_blank">The Codeero Group</a></p>
+            <p>Open source and free forever. <a href="https://github.com/simplebytes-com/launchpage.xyz" target="_blank">Contribute on GitHub</a></p>
+        </div>
+    </footer>
+
+    <!-- Analytics -->
+    <script defer data-domain="launchpage.xyz" src="https://analytics.simplebytes.com/js/script.pageview-props.tagged-events.js"></script>
+    <script>
+        window.plausible = window.plausible || function() {
+            (window.plausible.q = window.plausible.q || []).push(arguments)
+        }
+    </script>
+
+    <!-- Domain Lookup Form Enhancement -->
+    <script>
+        const lookupForm = document.getElementById('lookupForm');
+        const domainInput = document.getElementById('domainInput');
+
+        lookupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let domain = domainInput.value.trim();
+
+            // Remove protocol if present
+            domain = domain.replace(/^https?:\/\//, '');
+
+            // Remove www. if present
+            domain = domain.replace(/^www\./, '');
+
+            // Remove trailing slash
+            domain = domain.replace(/\/$/, '');
+
+            // Build URL with UTM source
+            const url = `https://domaindetails.com/results?domain=${encodeURIComponent(domain)}&utm_source=launchpage.xyz`;
+
+            // Track the lookup
+            if (typeof plausible !== 'undefined') {
+                plausible('Domain Lookup', {
+                    u: window.location.href + '?utm_source=' + encodeURIComponent(domain)
+                });
+            }
+
+            // Redirect
+            window.location.href = url;
+        });
+    </script>
+</body>
+
+</html>
