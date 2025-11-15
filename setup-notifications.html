@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Set up email notifications for Launchpage.xyz using Cloudflare Workers and KV storage. Complete guide with Wrangler CLI and UI setup instructions.">
-    <meta name="keywords" content="Cloudflare Workers, email notifications, KV storage, Wrangler, launchpage notifications, form submissions">
-    <title>Setup Email Notifications - Launchpage.xyz</title>
+    <meta name="description" content="Collect emails and build your waitlist with Launchpage.xyz using Cloudflare Workers and KV storage. Complete guide with Wrangler CLI and UI setup instructions.">
+    <meta name="keywords" content="Cloudflare Workers, email collection, waitlist, KV storage, Wrangler, launchpage, form submissions">
+    <title>Collect Emails/Waitlist - Launchpage.xyz</title>
 
     <!-- Open Graph -->
-    <meta property="og:title" content="Setup Email Notifications - Launchpage.xyz">
-    <meta property="og:description" content="Complete guide to setting up email notifications using Cloudflare Workers and KV storage for Launchpage.xyz.">
+    <meta property="og:title" content="Collect Emails/Waitlist - Launchpage.xyz">
+    <meta property="og:description" content="Complete guide to collecting emails and building your waitlist using Cloudflare Workers and KV storage for Launchpage.xyz.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://launchpage.xyz/setup-notifications.html">
     <meta property="og:image" content="https://launchpage.xyz/img/og-image.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Setup Email Notifications - Launchpage.xyz">
-    <meta name="twitter:description" content="Complete guide to setting up email notifications using Cloudflare Workers and KV storage.">
+    <meta name="twitter:title" content="Collect Emails/Waitlist - Launchpage.xyz">
+    <meta name="twitter:description" content="Complete guide to collecting emails and building your waitlist using Cloudflare Workers and KV storage.">
     <meta name="twitter:image" content="https://launchpage.xyz/img/og-image.png">
 
     <!-- Favicons -->
@@ -32,8 +32,8 @@
     {
         "@context": "https://schema.org",
         "@type": "TechArticle",
-        "headline": "Setup Email Notifications - Launchpage.xyz",
-        "description": "Complete guide to setting up email notifications using Cloudflare Workers and KV storage for form submissions.",
+        "headline": "Collect Emails/Waitlist - Launchpage.xyz",
+        "description": "Complete guide to collecting emails and building your waitlist using Cloudflare Workers and KV storage for form submissions.",
         "author": {
             "@type": "Organization",
             "name": "Launchpage.xyz"
@@ -264,10 +264,10 @@
     </header>
 
     <div class="container">
-        <a href="docs.html" class="back-link">ê Back to Documentation</a>
+        <a href="docs.html" class="back-link">&larr; Back to Documentation</a>
 
-        <h1>Setup Email Notifications</h1>
-        <p class="intro">Configure a Cloudflare Worker to receive and store email submissions from your launchpage. This guide covers both Wrangler CLI and UI-based setup methods.</p>
+        <h1>Collect Emails/Waitlist</h1>
+        <p class="intro">Configure a Cloudflare Worker to collect and store email submissions from your launchpage. This guide covers both Wrangler CLI and UI-based setup methods.</p>
 
         <h2>Overview</h2>
         <p>Launchpage.xyz includes a contact form that submits visitor information. To receive these submissions, you'll deploy a Cloudflare Worker that:</p>
@@ -377,7 +377,7 @@ wrangler domains add contact.yourdomain.com</code></pre>
         <h3>Step 1: Create a KV Namespace</h3>
         <ol>
             <li>Log into <a href="https://dash.cloudflare.com" target="_blank">Cloudflare Dashboard</a></li>
-            <li>Go to <strong>Workers & Pages</strong> í <strong>KV</strong></li>
+            <li>Go to <strong>Workers & Pages</strong> &rarr; <strong>KV</strong></li>
             <li>Click <strong>"Create a namespace"</strong></li>
             <li>Name it <code>SUBMISSIONS</code></li>
             <li>Note the Namespace ID for later</li>
@@ -385,8 +385,8 @@ wrangler domains add contact.yourdomain.com</code></pre>
 
         <h3>Step 2: Create a Worker</h3>
         <ol>
-            <li>Go to <strong>Workers & Pages</strong> í <strong>Overview</strong></li>
-            <li>Click <strong>"Create application"</strong> í <strong>"Create Worker"</strong></li>
+            <li>Go to <strong>Workers & Pages</strong> &rarr; <strong>Overview</strong></li>
+            <li>Click <strong>"Create application"</strong> &rarr; <strong>"Create Worker"</strong></li>
             <li>Name it <code>launchpage-contact</code></li>
             <li>Click <strong>"Deploy"</strong></li>
         </ol>
@@ -401,7 +401,7 @@ wrangler domains add contact.yourdomain.com</code></pre>
 
         <h3>Step 4: Bind the KV Namespace</h3>
         <ol>
-            <li>In your Worker, go to <strong>Settings</strong> í <strong>Variables</strong></li>
+            <li>In your Worker, go to <strong>Settings</strong> ÔøΩ <strong>Variables</strong></li>
             <li>Scroll to <strong>"KV Namespace Bindings"</strong></li>
             <li>Click <strong>"Add binding"</strong></li>
             <li>Variable name: <code>SUBMISSIONS</code></li>
@@ -474,7 +474,7 @@ wrangler kv:key get "submission:example.com:1234567890" --namespace-id=YOUR_NAME
 
         <h3>Method 2: Via Cloudflare Dashboard</h3>
         <ol>
-            <li>Go to <strong>Workers & Pages</strong> í <strong>KV</strong></li>
+            <li>Go to <strong>Workers & Pages</strong> &rarr; <strong>KV</strong></li>
             <li>Click on your <code>SUBMISSIONS</code> namespace</li>
             <li>Browse stored keys and values</li>
             <li>Click any key to view the submission data</li>
@@ -535,7 +535,7 @@ wrangler kv:key get "submission:example.com:1234567890" --namespace-id=YOUR_NAME
             <li>Verify the Worker is deployed: Check Workers dashboard</li>
             <li>Confirm the form action URL is correct in index.html</li>
             <li>Check CORS: Ensure your domain is in allowed origins</li>
-            <li>View Worker logs: Go to Worker í Logs & Analytics</li>
+            <li>View Worker logs: Go to Worker ÔøΩ Logs & Analytics</li>
         </ul>
 
         <h3>KV binding errors?</h3>
@@ -585,7 +585,7 @@ wrangler deploy</code></pre>
         <p><strong>Need help?</strong> <a href="https://github.com/simplebytes-com/launchpage-contact-worker/issues" target="_blank">Open an issue on GitHub</a> or check the <a href="https://developers.cloudflare.com/workers/" target="_blank">Cloudflare Workers documentation</a>.</p>
 
         <p style="margin-top: 2rem;">
-            <a href="docs.html" class="back-link">ê Back to Documentation</a>
+            <a href="docs.html" class="back-link">ÔøΩ Back to Documentation</a>
         </p>
     </div>
 
