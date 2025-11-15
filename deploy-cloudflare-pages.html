@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Deploy Launchpage.xyz to Cloudflare Pages with global CDN, automatic SSL, and integrated DNS management. Complete step-by-step deployment guide.">
+    <meta name="keywords" content="Cloudflare Pages deployment, launchpage, CDN hosting, Cloudflare DNS, automatic SSL">
+    <title>Deploy to Cloudflare Pages - Launchpage.xyz</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Deploy to Cloudflare Pages - Launchpage.xyz">
+    <meta property="og:description" content="Deploy on Cloudflare's global CDN with automatic SSL and seamless DNS integration.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://launchpage.xyz/deploy-cloudflare-pages.html">
+    <meta property="og:image" content="https://launchpage.xyz/img/og-image.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Deploy to Cloudflare Pages - Launchpage.xyz">
+    <meta name="twitter:description" content="Deploy on Cloudflare's global CDN with automatic SSL and seamless DNS integration.">
+    <meta name="twitter:image" content="https://launchpage.xyz/img/og-image.png">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" href="/img/favicons/favicon.ico">
+    <meta name="theme-color" content="#2C5F7C">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "Deploy to Cloudflare Pages - Launchpage.xyz",
+        "description": "Complete guide to deploying Launchpage.xyz on Cloudflare Pages with global CDN and automatic SSL.",
+        "author": {
+            "@type": "Organization",
+            "name": "Launchpage.xyz"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Launchpage.xyz"
+        },
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-01-01"
+    }
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Lexend:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-ocean: #2C5F7C;
+            --color-teal: #4A9BAE;
+            --color-dark: #1A2F42;
+            --color-gray-900: #0F1419;
+            --color-gray-800: #1C2430;
+            --color-gray-100: #F8FAFC;
+            --color-white: #FFFFFF;
+
+            --font-display: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            color: var(--color-dark);
+            background: var(--color-white);
+        }
+
+        .header {
+            background: var(--color-white);
+            border-bottom: 1px solid rgba(44, 95, 124, 0.1);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--color-ocean);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav a {
+            color: var(--color-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: var(--color-ocean);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--color-ocean);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+            color: var(--color-dark);
+            font-weight: 800;
+        }
+
+        .intro {
+            font-size: 1.25rem;
+            color: rgba(26, 47, 66, 0.7);
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin: 3rem 0 1rem;
+            color: var(--color-dark);
+            font-weight: 700;
+        }
+
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--color-ocean);
+            font-weight: 700;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        code {
+            font-family: var(--font-mono);
+            background: var(--color-gray-100);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.9em;
+            color: var(--color-ocean);
+        }
+
+        pre {
+            background: var(--color-gray-900);
+            color: #E6EDF3;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .note {
+            background: rgba(74, 155, 174, 0.1);
+            border-left: 4px solid var(--color-teal);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.25rem;
+        }
+
+        .note strong {
+            color: var(--color-ocean);
+        }
+
+        .platform-nav {
+            background: var(--color-gray-100);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            margin: 3rem 0;
+        }
+
+        .platform-nav h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .platform-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            list-style: none;
+            margin: 0;
+        }
+
+        .platform-links li {
+            margin: 0;
+        }
+
+        .platform-links a {
+            display: block;
+            padding: 1rem;
+            background: var(--color-white);
+            border-radius: 0.5rem;
+            color: var(--color-ocean);
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .platform-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                gap: 1rem;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">launchpage.xyz</a>
+            <nav class="nav">
+                <a href="/">Home</a>
+                <a href="example.html">Example</a>
+                <a href="docs.html">Documentation</a>
+                <a href="https://github.com/simplebytes-com/launchpage.xyz" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <a href="docs.html" class="back-link">ê Back to Documentation</a>
+
+        <h1>Deploy to Cloudflare Pages</h1>
+        <p class="intro">Deploy with Cloudflare's global CDN and DNS management. Perfect for domains already using Cloudflare, with automatic DNS configuration and enterprise-grade performance.</p>
+
+        <h2>Why Cloudflare Pages?</h2>
+        <ul>
+            <li><strong>Global CDN</strong> - Content delivered from 275+ data centers worldwide</li>
+            <li><strong>Automatic DNS</strong> - If your domain is on Cloudflare, DNS is configured instantly</li>
+            <li><strong>Unlimited bandwidth</strong> - No bandwidth limits on the free tier</li>
+            <li><strong>DDoS protection</strong> - Enterprise-grade security built-in</li>
+            <li><strong>Git integration</strong> - Deploy directly from GitHub or GitLab</li>
+        </ul>
+
+        <h2>Prerequisites</h2>
+        <ul>
+            <li>A Cloudflare account (free tier available at <a href="https://pages.cloudflare.com" target="_blank">pages.cloudflare.com</a>)</li>
+            <li>Your Launchpage.xyz repository on GitHub or GitLab</li>
+            <li>A registered domain (optionally managed by Cloudflare DNS)</li>
+        </ul>
+
+        <h2>Deployment Steps</h2>
+
+        <h3>Step 1: Create a Cloudflare Pages Project</h3>
+        <ol>
+            <li>Go to <a href="https://pages.cloudflare.com" target="_blank">Cloudflare Pages</a></li>
+            <li>Log in to your Cloudflare account</li>
+            <li>Click <strong>"Create a project"</strong></li>
+            <li>Click <strong>"Connect to Git"</strong></li>
+            <li>Authorize Cloudflare to access your Git provider (GitHub or GitLab)</li>
+            <li>Select the <code>launchpage.xyz</code> repository</li>
+        </ol>
+
+        <h3>Step 2: Configure Build Settings</h3>
+        <p>For Launchpage.xyz, use these settings:</p>
+
+        <ul>
+            <li><strong>Framework preset:</strong> None (or select "Static HTML")</li>
+            <li><strong>Build command:</strong> (leave empty - no build needed)</li>
+            <li><strong>Build output directory:</strong> <code>.</code> (root directory)</li>
+            <li><strong>Root directory:</strong> <code>/</code> (default)</li>
+        </ul>
+
+        <h3>Step 3: Deploy</h3>
+        <ol>
+            <li>Review your settings</li>
+            <li>Click <strong>"Save and Deploy"</strong></li>
+            <li>Cloudflare will clone your repository and deploy</li>
+            <li>Your site will be live at <code>your-project.pages.dev</code> in about 1 minute</li>
+        </ol>
+
+        <h2>Add Your Custom Domain</h2>
+
+        <h3>If Your Domain is on Cloudflare DNS (Easiest)</h3>
+        <ol>
+            <li>In your Pages project, go to <strong>"Custom domains"</strong></li>
+            <li>Click <strong>"Set up a custom domain"</strong></li>
+            <li>Enter your domain (e.g., <code>example.com</code>)</li>
+            <li>Click <strong>"Continue"</strong></li>
+            <li>Cloudflare will automatically configure DNS records</li>
+            <li>SSL certificate is provisioned automatically (Universal SSL)</li>
+            <li>Domain will be live within minutes</li>
+        </ol>
+
+        <div class="note">
+            <strong>Pro Tip:</strong> If your domain is already on Cloudflare DNS, custom domain setup takes just seconds with automatic DNS configuration!
+        </div>
+
+        <h3>If Your Domain is NOT on Cloudflare</h3>
+        <ol>
+            <li>Add your custom domain in Pages project settings</li>
+            <li>Cloudflare will provide a CNAME target (e.g., <code>your-project.pages.dev</code>)</li>
+            <li>At your DNS provider, add a CNAME record:
+                <ul>
+                    <li><strong>Name:</strong> @ (for root domain) or www (for subdomain)</li>
+                    <li><strong>Target:</strong> The Cloudflare Pages URL provided</li>
+                </ul>
+            </li>
+            <li>Wait for DNS propagation (5-30 minutes typically)</li>
+            <li>SSL will be automatically provisioned once DNS is confirmed</li>
+        </ol>
+
+        <h2>Continuous Deployment</h2>
+        <p>Cloudflare Pages automatically deploys on every Git push:</p>
+
+        <ul>
+            <li>Push to your connected branch triggers automatic deployment</li>
+            <li>Preview deployments for all branches and pull requests</li>
+            <li>Deployment history with one-click rollback</li>
+            <li>Deploy hooks for manual triggers</li>
+        </ul>
+
+        <h2>Branch-Based Deployments</h2>
+        <p>Configure different branches for production and preview:</p>
+
+        <ol>
+            <li>Go to project <strong>"Settings"</strong> í <strong>"Builds & deployments"</strong></li>
+            <li>Set <strong>"Production branch"</strong> (e.g., <code>main</code>)</li>
+            <li>All other branches create preview deployments</li>
+            <li>Preview URLs: <code>branch-name.your-project.pages.dev</code></li>
+        </ol>
+
+        <h2>Enable Web Analytics (Optional)</h2>
+        <p>Cloudflare offers privacy-first web analytics:</p>
+
+        <ol>
+            <li>In your Cloudflare dashboard, go to <strong>"Analytics"</strong> í <strong>"Web Analytics"</strong></li>
+            <li>Click <strong>"Add a site"</strong></li>
+            <li>Enter your domain</li>
+            <li>Copy the provided JavaScript snippet</li>
+            <li>Add it to your <code>index.html</code> before the closing <code>&lt;/body&gt;</code> tag</li>
+        </ol>
+
+        <h2>Advanced: Multiple Domains</h2>
+        <p>Host multiple domains on the same Pages project:</p>
+
+        <ol>
+            <li>Go to <strong>"Custom domains"</strong></li>
+            <li>Click <strong>"Set up a custom domain"</strong> for each domain</li>
+            <li>Each domain will serve the same content</li>
+            <li>The launchpage will automatically detect and display the correct domain name</li>
+        </ol>
+
+        <h2>Troubleshooting</h2>
+
+        <h3>DNS not resolving?</h3>
+        <ul>
+            <li>Verify CNAME record is correctly pointing to your Pages URL</li>
+            <li>Check DNS propagation with tools like <code>dig</code> or online DNS checkers</li>
+            <li>Ensure there are no conflicting A or AAAA records</li>
+        </ul>
+
+        <h3>SSL certificate issues?</h3>
+        <ul>
+            <li>If using Cloudflare DNS: SSL should be automatic - check Universal SSL is enabled</li>
+            <li>If external DNS: Ensure CNAME is properly configured and propagated</li>
+            <li>Wait up to 24 hours for certificate provisioning on first setup</li>
+        </ul>
+
+        <h3>Build failing?</h3>
+        <ul>
+            <li>Ensure build command is empty (Launchpage is static HTML)</li>
+            <li>Verify build output directory is <code>.</code> (root)</li>
+            <li>Check deployment logs in Pages dashboard for specific errors</li>
+        </ul>
+
+        <h2>Cloudflare-Specific Benefits</h2>
+        <ul>
+            <li><strong>Argo Smart Routing</strong> - Optimize global performance (paid add-on)</li>
+            <li><strong>Web Application Firewall</strong> - Advanced security (paid plans)</li>
+            <li><strong>Page Rules</strong> - Custom caching and redirects</li>
+            <li><strong>Workers</strong> - Add serverless functions if needed</li>
+            <li><strong>Analytics</strong> - Built-in privacy-first analytics</li>
+        </ul>
+
+        <div class="platform-nav">
+            <h3>Other Deployment Platforms</h3>
+            <ul class="platform-links">
+                <li><a href="deploy-netlify.html">Netlify</a></li>
+                <li><a href="deploy-vercel.html">Vercel</a></li>
+                <li><a href="deploy-github-pages.html">GitHub Pages</a></li>
+                <li><a href="deploy-hetzner.html">Hetzner VPS</a></li>
+            </ul>
+        </div>
+
+        <hr style="margin: 3rem 0; border: none; border-top: 1px solid rgba(44, 95, 124, 0.1);">
+
+        <p><strong>Need help?</strong> <a href="https://github.com/simplebytes-com/launchpage.xyz/issues" target="_blank">Open an issue on GitHub</a> or check the <a href="https://developers.cloudflare.com/pages/" target="_blank">Cloudflare Pages documentation</a>.</p>
+
+        <p style="margin-top: 2rem;">
+            <a href="docs.html" class="back-link">ê Back to Documentation</a>
+        </p>
+    </div>
+
+    <!-- Analytics -->
+    <script defer data-domain="launchpage.xyz" src="https://analytics.simplebytes.com/js/script.pageview-props.tagged-events.js"></script>
+</body>
+</html>

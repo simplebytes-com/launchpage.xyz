@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Deploy Launchpage.xyz on Hetzner VPS with Nginx catch-all configuration. Serve unlimited domains from a single server with SSL support.">
+    <meta name="keywords" content="Hetzner deployment, VPS hosting, Nginx configuration, catch-all server, SSL certificates, Ubuntu server">
+    <title>Deploy to Hetzner VPS - Launchpage.xyz</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Deploy to Hetzner VPS - Launchpage.xyz">
+    <meta property="og:description" content="Complete guide to deploying Launchpage.xyz on Hetzner VPS with Nginx catch-all configuration for unlimited domains.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://launchpage.xyz/deploy-hetzner.html">
+    <meta property="og:image" content="https://launchpage.xyz/img/og-image.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Deploy to Hetzner VPS - Launchpage.xyz">
+    <meta name="twitter:description" content="Complete guide to deploying Launchpage.xyz on Hetzner VPS with Nginx catch-all configuration.">
+    <meta name="twitter:image" content="https://launchpage.xyz/img/og-image.png">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicons/favicon-16x16.png">
+    <link rel="shortcut icon" href="/img/favicons/favicon.ico">
+    <meta name="theme-color" content="#2C5F7C">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "Deploy to Hetzner VPS - Launchpage.xyz",
+        "description": "Complete guide to deploying Launchpage.xyz on Hetzner VPS with Nginx catch-all server configuration.",
+        "author": {
+            "@type": "Organization",
+            "name": "Launchpage.xyz"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Launchpage.xyz"
+        },
+        "datePublished": "2025-01-01",
+        "dateModified": "2025-01-01"
+    }
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Lexend:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-ocean: #2C5F7C;
+            --color-teal: #4A9BAE;
+            --color-dark: #1A2F42;
+            --color-gray-900: #0F1419;
+            --color-gray-800: #1C2430;
+            --color-gray-100: #F8FAFC;
+            --color-white: #FFFFFF;
+
+            --font-display: 'Plus Jakarta Sans', sans-serif;
+            --font-body: 'Lexend', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            color: var(--color-dark);
+            background: var(--color-white);
+        }
+
+        .header {
+            background: var(--color-white);
+            border-bottom: 1px solid rgba(44, 95, 124, 0.1);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            color: var(--color-ocean);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav a {
+            color: var(--color-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: var(--color-ocean);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 1.5rem;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--color-ocean);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+            color: var(--color-dark);
+            font-weight: 800;
+        }
+
+        .intro {
+            font-size: 1.25rem;
+            color: rgba(26, 47, 66, 0.7);
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin: 3rem 0 1rem;
+            color: var(--color-dark);
+            font-weight: 700;
+        }
+
+        h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--color-ocean);
+            font-weight: 700;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        code {
+            font-family: var(--font-mono);
+            background: var(--color-gray-100);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-size: 0.9em;
+            color: var(--color-ocean);
+        }
+
+        pre {
+            background: var(--color-gray-900);
+            color: #E6EDF3;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .note {
+            background: rgba(74, 155, 174, 0.1);
+            border-left: 4px solid var(--color-teal);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0.25rem;
+        }
+
+        .note strong {
+            color: var(--color-ocean);
+        }
+
+        .platform-nav {
+            background: var(--color-gray-100);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            margin: 3rem 0;
+        }
+
+        .platform-nav h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .platform-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            list-style: none;
+            margin: 0;
+        }
+
+        .platform-links li {
+            margin: 0;
+        }
+
+        .platform-links a {
+            display: block;
+            padding: 1rem;
+            background: var(--color-white);
+            border-radius: 0.5rem;
+            color: var(--color-ocean);
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .platform-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav {
+                flex-wrap: wrap;
+                gap: 1rem;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <a href="/" class="logo">launchpage.xyz</a>
+            <nav class="nav">
+                <a href="/">Home</a>
+                <a href="example.html">Example</a>
+                <a href="docs.html">Documentation</a>
+                <a href="https://github.com/simplebytes-com/launchpage.xyz" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <a href="docs.html" class="back-link">ê Back to Documentation</a>
+
+        <h1>Deploy to Hetzner VPS</h1>
+        <p class="intro">For those who prefer full control, deploy on a Hetzner VPS with Nginx configured to serve your launchpage for ANY domain pointing to your server. Perfect for managing multiple domains from a single server.</p>
+
+        <h2>Why Hetzner VPS?</h2>
+        <ul>
+            <li><strong>Full control</strong> - Complete server access and customization</li>
+            <li><strong>Catch-all domains</strong> - Serve unlimited domains from one server</li>
+            <li><strong>Cost-effective</strong> - Starting at ¨4.15/month for unlimited domains</li>
+            <li><strong>Fast European network</strong> - Excellent connectivity and performance</li>
+            <li><strong>Scalable</strong> - Easy to upgrade resources as needed</li>
+        </ul>
+
+        <h2>Prerequisites</h2>
+        <ul>
+            <li>A Hetzner account (<a href="https://www.hetzner.com" target="_blank">hetzner.com</a>)</li>
+            <li>A Hetzner VPS (or any Ubuntu/Debian server)</li>
+            <li>Root or sudo access to the server</li>
+            <li>Basic command line knowledge</li>
+            <li>Domain(s) with A records pointing to your server IP</li>
+        </ul>
+
+        <h2>Step 1: Set Up the Server</h2>
+        <p>First, SSH into your server and install the required software:</p>
+
+        <pre><code># SSH into your server
+ssh root@your-server-ip
+
+# Update system packages
+apt update && apt upgrade -y
+
+# Install Nginx and Git
+apt install nginx git -y
+
+# Install Certbot for SSL certificates
+apt install certbot python3-certbot-nginx -y</code></pre>
+
+        <h2>Step 2: Clone the Repository</h2>
+        <p>Deploy Launchpage.xyz to your web directory:</p>
+
+        <pre><code># Create web directory
+mkdir -p /var/www/launchpage
+
+# Navigate to the directory
+cd /var/www/launchpage
+
+# Clone the repository
+git clone https://github.com/simplebytes-com/launchpage.xyz.git .
+
+# Set proper permissions
+chown -R www-data:www-data /var/www/launchpage
+chmod -R 755 /var/www/launchpage</code></pre>
+
+        <h2>Step 3: Configure Nginx (Catch-All for Any Domain)</h2>
+        <p>Create an Nginx configuration that serves the launchpage for <strong>ANY</strong> domain pointing to your server:</p>
+
+        <pre><code># Create Nginx configuration file
+nano /etc/nginx/sites-available/launchpage</code></pre>
+
+        <p>Add this configuration:</p>
+
+        <pre><code>server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    # Catch all server names (ANY domain)
+    server_name _;
+
+    root /var/www/launchpage;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Serve static files with caching
+    location ~* \.(jpg|jpeg|png|gif|ico|css|js|svg)$ {
+        expires 7d;
+        add_header Cache-Control "public, immutable";
+    }
+}</code></pre>
+
+        <div class="note">
+            <strong>Key Configuration:</strong> The <code>server_name _;</code> directive is the magic here - it makes Nginx serve your launchpage for ANY domain pointing to this server's IP!
+        </div>
+
+        <h2>Step 4: Enable the Configuration</h2>
+
+        <pre><code># Remove default Nginx configuration
+rm /etc/nginx/sites-enabled/default
+
+# Enable our launchpage configuration
+ln -s /etc/nginx/sites-available/launchpage /etc/nginx/sites-enabled/
+
+# Test Nginx configuration for syntax errors
+nginx -t
+
+# If test passes, restart Nginx
+systemctl restart nginx
+
+# Enable Nginx to start on boot
+systemctl enable nginx</code></pre>
+
+        <h2>Step 5: Point Your Domains</h2>
+        <p>For each domain you want to use with your launchpage:</p>
+
+        <ol>
+            <li>Go to your domain registrar's DNS settings</li>
+            <li>Add an A record:
+                <ul>
+                    <li><strong>Type:</strong> A</li>
+                    <li><strong>Name:</strong> @ (for root domain like example.com)</li>
+                    <li><strong>Value:</strong> Your server IP address (e.g., 157.245.16.45)</li>
+                    <li><strong>TTL:</strong> 300 (5 minutes) or default</li>
+                </ul>
+            </li>
+            <li>Optionally, add a www subdomain:
+                <ul>
+                    <li><strong>Type:</strong> A</li>
+                    <li><strong>Name:</strong> www</li>
+                    <li><strong>Value:</strong> Your server IP address</li>
+                </ul>
+            </li>
+            <li>Wait for DNS propagation (typically 5-30 minutes)</li>
+        </ol>
+
+        <p>Once DNS propagates, visiting your domain will show the launchpage!</p>
+
+        <h2>Step 6: Add SSL Certificates (Recommended)</h2>
+        <p>Secure your domains with free Let's Encrypt SSL certificates:</p>
+
+        <h3>For Specific Domains</h3>
+        <p>If you have specific domains, add SSL for each:</p>
+
+        <pre><code># For a single domain
+certbot --nginx -d example.com -d www.example.com
+
+# Follow the prompts:
+# - Enter your email address
+# - Agree to Terms of Service
+# - Choose whether to redirect HTTP to HTTPS (recommended: yes)</code></pre>
+
+        <p>This will automatically update your Nginx configuration with SSL settings.</p>
+
+        <h3>Updated Nginx Config with SSL</h3>
+        <p>After running Certbot, your configuration will look like this:</p>
+
+        <pre><code>server {
+    listen 80;
+    listen [::]:80;
+    server_name example.com www.example.com;
+
+    # Redirect HTTP to HTTPS
+    return 301 https://$server_name$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name example.com www.example.com;
+
+    # SSL certificates (managed by Certbot)
+    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
+
+    root /var/www/launchpage;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Static file caching
+    location ~* \.(jpg|jpeg|png|gif|ico|css|js|svg)$ {
+        expires 7d;
+        add_header Cache-Control "public, immutable";
+    }
+}</code></pre>
+
+        <h3>Certificate Auto-Renewal</h3>
+        <p>Certbot automatically sets up certificate renewal. Test it with:</p>
+
+        <pre><code># Test renewal process
+certbot renew --dry-run
+
+# View renewal timer status
+systemctl status certbot.timer</code></pre>
+
+        <h2>Adding Additional Domains</h2>
+        <p>To add more domains to the same server:</p>
+
+        <ol>
+            <li>Point the new domain's A record to your server IP</li>
+            <li>For HTTP only: No additional configuration needed (catch-all works automatically)</li>
+            <li>For HTTPS: Run Certbot for the new domain:
+                <pre><code>certbot --nginx -d newdomain.com -d www.newdomain.com</code></pre>
+            </li>
+        </ol>
+
+        <h2>Updating Your Launchpage</h2>
+        <p>To update to the latest version of Launchpage.xyz:</p>
+
+        <pre><code># Navigate to launchpage directory
+cd /var/www/launchpage
+
+# Pull latest changes from Git
+git pull origin main
+
+# Reload Nginx to ensure changes are served
+systemctl reload nginx</code></pre>
+
+        <h2>Monitoring and Maintenance</h2>
+
+        <h3>Check Nginx Status</h3>
+        <pre><code># Check if Nginx is running
+systemctl status nginx
+
+# View Nginx error logs
+tail -f /var/log/nginx/error.log
+
+# View access logs
+tail -f /var/log/nginx/access.log</code></pre>
+
+        <h3>Firewall Configuration</h3>
+        <p>If using UFW (Ubuntu Firewall), allow HTTP and HTTPS:</p>
+
+        <pre><code># Allow Nginx through firewall
+ufw allow 'Nginx Full'
+
+# Check firewall status
+ufw status</code></pre>
+
+        <h2>Troubleshooting</h2>
+
+        <h3>Domain not showing launchpage?</h3>
+        <ul>
+            <li>Verify A record is correctly pointing to your server IP</li>
+            <li>Check DNS propagation with <code>dig yourdomain.com</code> or online DNS checker</li>
+            <li>Ensure Nginx is running: <code>systemctl status nginx</code></li>
+            <li>Check Nginx error logs: <code>tail /var/log/nginx/error.log</code></li>
+        </ul>
+
+        <h3>SSL certificate not working?</h3>
+        <ul>
+            <li>Ensure domain DNS is properly configured and propagated</li>
+            <li>Verify Certbot ran successfully without errors</li>
+            <li>Check SSL configuration in Nginx config file</li>
+            <li>Test with: <code>certbot certificates</code></li>
+        </ul>
+
+        <h3>Nginx won't start?</h3>
+        <ul>
+            <li>Check configuration syntax: <code>nginx -t</code></li>
+            <li>Review error details: <code>journalctl -xe</code></li>
+            <li>Ensure no port conflicts (port 80/443 not used by other services)</li>
+        </ul>
+
+        <div class="note">
+            <strong>Pro Tip:</strong> The catch-all configuration means you can point UNLIMITED domains to your server, and they'll all automatically show the launchpage. Perfect for managing a portfolio of domains!
+        </div>
+
+        <h2>Performance Optimization</h2>
+
+        <h3>Enable Gzip Compression</h3>
+        <p>Add to your Nginx configuration:</p>
+
+        <pre><code>gzip on;
+gzip_vary on;
+gzip_types text/plain text/css application/json application/javascript text/xml application/xml;
+gzip_min_length 1000;</code></pre>
+
+        <h3>Add Security Headers</h3>
+        <pre><code>add_header X-Frame-Options "SAMEORIGIN" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header X-XSS-Protection "1; mode=block" always;</code></pre>
+
+        <div class="platform-nav">
+            <h3>Other Deployment Platforms</h3>
+            <ul class="platform-links">
+                <li><a href="deploy-netlify.html">Netlify</a></li>
+                <li><a href="deploy-vercel.html">Vercel</a></li>
+                <li><a href="deploy-github-pages.html">GitHub Pages</a></li>
+                <li><a href="deploy-cloudflare-pages.html">Cloudflare Pages</a></li>
+            </ul>
+        </div>
+
+        <hr style="margin: 3rem 0; border: none; border-top: 1px solid rgba(44, 95, 124, 0.1);">
+
+        <p><strong>Need help?</strong> <a href="https://github.com/simplebytes-com/launchpage.xyz/issues" target="_blank">Open an issue on GitHub</a> or check the <a href="https://docs.hetzner.com" target="_blank">Hetzner documentation</a>.</p>
+
+        <p style="margin-top: 2rem;">
+            <a href="docs.html" class="back-link">ê Back to Documentation</a>
+        </p>
+    </div>
+
+    <!-- Analytics -->
+    <script defer data-domain="launchpage.xyz" src="https://analytics.simplebytes.com/js/script.pageview-props.tagged-events.js"></script>
+</body>
+</html>
