@@ -1,0 +1,7 @@
+# robots.txt for launchpage.xyz
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://launchpage.xyz/sitemap.xml
