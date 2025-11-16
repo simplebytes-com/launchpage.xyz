@@ -134,38 +134,24 @@
 
     }
     </style>
+    <script defer data-domain="launchpage.xyz" src="https://analytics.codeero.com/js/plausible.manual.js"></script>
+    <script defer data-domain="launchpage.xyz" src="https://launchpage.apps.codeero.com/launchpage_analytics.js"></script>
     <script>
-    // Set data-domain dynamically to the current hostname
-    (function() {
+    window.plausible = window.plausible || function() {
+        (window.plausible.q = window.plausible.q || []).push(arguments)
+    }
+    </script>
+    <script type="text/javascript">
+    // Track pageview with the current domain as a custom property
+    window.addEventListener('load', function() {
         const currentDomain = window.location.hostname;
-        const script1 = document.createElement('script');
-        script1.defer = true;
-        script1.setAttribute('data-domain', currentDomain);
-        script1.src = 'https://analytics.codeero.com/js/plausible.manual.js';
-
-        const script2 = document.createElement('script');
-        script2.defer = true;
-        script2.setAttribute('data-domain', currentDomain);
-        script2.src = 'https://launchpage.apps.codeero.com/launchpage_analytics.js';
-
-        document.head.appendChild(script1);
-        document.head.appendChild(script2);
-
-        window.plausible = window.plausible || function() {
-            (window.plausible.q = window.plausible.q || []).push(arguments)
-        }
-
-        // Track pageview with domain as utm_source
-        window.addEventListener('load', function() {
-            plausible('pageview', {
-                u: window.location.href,
-                props: {
-                    domain: currentDomain,
-                    utm_source: currentDomain
-                }
-            });
+        plausible('pageview', {
+            props: {
+                domain: currentDomain,
+                site: currentDomain
+            }
         });
-    })();
+    });
     </script>
 </head>
 
