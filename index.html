@@ -503,6 +503,16 @@
         window.plausible = window.plausible || function() {
             (window.plausible.q = window.plausible.q || []).push(arguments)
         }
+
+        // Track pageview with domain as custom property
+        window.addEventListener('load', function() {
+            const currentDomain = window.location.hostname;
+            plausible('pageview', {
+                props: {
+                    page: currentDomain
+                }
+            });
+        });
     </script>
 </head>
 
